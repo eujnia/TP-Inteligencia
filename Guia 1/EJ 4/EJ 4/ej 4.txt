@@ -1,0 +1,8 @@
+
+Sobre la tasa de aprendizaje y factor momento
+
+El valor de la tasa de aprendizaje controla el tamaño del cambio de los pesos
+en cada iteración. 
+El factor momento  acelera la convergencia de los pesos.
+
+
