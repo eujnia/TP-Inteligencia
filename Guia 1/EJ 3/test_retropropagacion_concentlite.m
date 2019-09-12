@@ -10,9 +10,9 @@ tasa_apr=0.1;
 [w,e2,desempenio_trn]=retropropagacion(datos_trn, cant_entradas, dim_red, cant_epocas, criterio, tasa_apr);
 [desempenio_tst]=retropropagacion_tst(datos_tst, cant_entradas, dim_red, w);
 
-%figure;
-%semilogy([1:length(e2)],e2); hold on;
-%title('error cuadratico total entrenamiento concentlite');
+figure;
+semilogy([1:length(e2)],e2); hold on;
+title('error cuadratico total entrenamiento concentlite');
 
 desempenio_trn
 desempenio_tst
