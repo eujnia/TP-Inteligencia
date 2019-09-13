@@ -21,10 +21,10 @@ RBF tiene dos capas. Una capa gausiana con aprendizaje no supervisado y una capa
 1- Realización de la capa gausiana: 
 
 Objetivos:
-•  Encontrar k conjuntos  Cj de forma que:
-		•  Cada conjunto Cj sea lo más diferente posible de los demás
-		•  Los patrones dentro de cada Cj sean lo más parecidos posible entre ellos.
-• Encontrar el centroide de cada conjunto Cj
++ Encontrar k conjuntos  Cj de forma tal que
+	+ Cada conjunto Cj sea lo más diferente posible de los demás
+        + Los patrones dentro de cada Cj sean lo más parecidos posible entre ellos.
++ Encontrar el centroide de cada conjunto Cj
 
 
 
