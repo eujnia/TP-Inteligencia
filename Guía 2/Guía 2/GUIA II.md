@@ -4,11 +4,11 @@
 
 ### Ejercicio 1:
 
-Codique el algoritmo de entrenamiento para una red neuronal con RBF y pruebe implementar en la resolución del problema xor, empleando los datos de la guía anterior.
+Codifique el algoritmo de entrenamiento para una red neuronal con RBF y pruebe implementar en la resolución del problema xor, empleando los datos de la guía anterior.
 
 Diseñe una red RBF para resolver el problema Iris (irisbin.csv), considerando una cantidad de parámetros similar a la red MLP de la guía anterior. 
 
-Luego compare la velocidad de entrenamiento y el porcentaje nal de clasificación obtenido con ambas arquitecturas. 
+Luego compare la velocidad de entrenamiento y el porcentaje final de clasificación obtenido con ambas arquitecturas. 
 
 
 
