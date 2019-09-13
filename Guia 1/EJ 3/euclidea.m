@@ -1,4 +1,5 @@
-datos=csvread('concentlite.csv');
+
+datos = csvread('concentlite.csv');
 d=[];
 for i=1:size(datos,1)
   d=[d; sqrt((datos(i,1)-0.5)^2+(datos(i,2)-0.5)^2)];
