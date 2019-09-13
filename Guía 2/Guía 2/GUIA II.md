@@ -23,7 +23,7 @@ RBF tiene dos capas. Una capa gausiana con aprendizaje no supervisado y una capa
 Objetivos:
 + Encontrar k conjuntos  Cj de forma tal que
 	+ Cada conjunto Cj sea lo más diferente posible de los demás
-        + Los patrones dentro de cada Cj sean lo más parecidos posible entre ellos.
+	+ Los patrones dentro de cada Cj sean lo más parecidos posible entre ellos.
 + Encontrar el centroide de cada conjunto Cj
 
 
@@ -31,6 +31,7 @@ Objetivos:
 Método: 
 
 1. Inicialización: se forman los k conjuntos con patrones elegidos al aleatoriamente.
+
 2. Se calculan los centroides.
 
 3. Se reasignan los patrones al Cj más cercano.
