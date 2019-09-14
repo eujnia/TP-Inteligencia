@@ -1,7 +1,6 @@
-function [cg,yg] = capa_gaussiana(entradas, k, taza, desvio=1)  
+function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)  
 
-  # cg: salida real 
-    
+   
   cant_patrones = size(entradas,1);
   tipo_patrones = size(entradas,2);
   
@@ -23,8 +22,8 @@ function [cg,yg] = capa_gaussiana(entradas, k, taza, desvio=1)
   c_aux = zeros(k,tipo_patrones); 
   v_delta = []; 
    
- # la comparación c!=c_aux no funca 
- for i = 1:30
+ # la comparaciÃ³n c!=c_aux no funca 
+ for i = 1:90
    c_aux=c;
     
     # calculamos la distancia de cada patron a los k centroides
@@ -70,25 +69,21 @@ function [cg,yg] = capa_gaussiana(entradas, k, taza, desvio=1)
   
   endfor
    
-  yg=[];
-  # cada vez son más chicos los cambios
-  v_delta
+  yg=zeros(cant_patrones,k);
+  
   #delta es el promedio de los cambios del grupo
-   for i=1:k
-     yg = [yg exp((-0.5* mean((v_delta(i,:)-c(i,:)))./ desvio).^2)];
+  for j=1:k
+    for i=1:cant_patrones
+     y  = exp((-0.5* mean((entradas(i,:)- c(j,:)))./ desvio).^2);
+     yg(i,j) = y;
     # yg = [yg  mean( v_delta(i) - c(i,:) )];
-   endfor
-   cg = zeros(cant_patrones,1);
-   
-  for i=1:cant_patrones
-    
-    #si la salida del patron es igual al maximo de yg 
-    # va 1 sino -1
-    if ( yg(g(i)) == max(yg))
-      cg(i,1) = 1;
-    else 
-      cg(i,1) = -1;
-     endif
     endfor
+   endfor
+   
+    
+   for i = 1:k
+       plot(c(i,1),c(i,2),'ro');
+          hold on;
+   endfor
    
 endfunction
