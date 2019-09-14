@@ -1,0 +1,8 @@
+desempenio_trn_m1 =  0.80000
+desempenio_tst_m1 =  0.80480
+desempenio_trn_m2 =  0.86200
+desempenio_tst_m2 =  0.87988
+desempenio_trn_m3 =  0.83800
+desempenio_tst_m3 =  0.82883
+desempenio_trn =  0.80400
+desempenio_tst =  0.78378
