@@ -23,8 +23,8 @@ function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)
   distintos=1;
   figure; axis([-1.25 1.25 -1.25 1.25]); hold on;
   for i = 1:k
-       axis([-1.25 1.25 -1.25 1.25]);
        plot(c(i,1),c(i,2),'ro'); hold on;
+       axis([-1.25 1.25 -1.25 1.25]); hold on
        pause(1);
    endfor
    hold off;
@@ -51,8 +51,8 @@ while distintos
     
 %    grafica
    for i = 1:k
-       axis([-1.25 1.25 -1.25 1.25]);
        plot(c(i,1),c(i,2),'ro'); hold on;
+       axis([-1.25 1.25 -1.25 1.25]); hold on;
        pause(1);
    endfor
    hold off;
