@@ -6,8 +6,6 @@ function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)
   
   g = zeros(cant_patrones,1); # cant de patrones
   w = ones(k,cant_patrones); # cant de gausianas, cant de patrones
-  
-  g(1:cant_patrones) = int32(rand(cant_patrones,1)*k +0.5);
 
   # iniciacion de c forma 1  
   c=entradas(1:k,:);
@@ -23,15 +21,35 @@ function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)
   distintos=1;
   figure; axis([-1.25 1.25 -1.25 1.25]); hold on;
   for i = 1:k
-       plot(c(i,1),c(i,2),'ro'); hold on;
+       plot(c(i,1),c(i,2),'ro','linewidth',1.2); hold on;
        axis([-1.25 1.25 -1.25 1.25]); hold on
-       pause(1);
+%       pause(1);
    endfor
    hold off;
  # comparar que el grupo haya sido modificado
 while distintos
    g_aux=g;
-   
+    
+%    grafica
+   for i = 1:k
+       plot(c(i,1),c(i,2),'ro','linewidth',1.2); hold on;
+       axis([-1.25 1.25 -1.25 1.25]); hold on;
+%       pause(1);
+   endfor
+   hold off;
+    
+    # calculamos la distancia de cada patron a los k centroides
+    for p=1:cant_patrones
+      dist = [];  
+      for nc=1:k
+        dist_patron_centroide = norm(entradas(p,:) - c(nc,:) , 2);
+        dist=[dist  dist_patron_centroide];
+      endfor
+      
+      [~,pos] = min(dist(1,:)); # dist  = [0.5 4 45 0.7 4.3] -> min = 0.5 pos=1
+      g(p) = pos; 
+    endfor
+    
     # promedio cada componente del punto del conj 
     delta = zeros(k,tipo_patrones); # centroides, tipo_patrones
     cont = zeros(k,1);
@@ -47,26 +65,6 @@ while distintos
       else      
         c(nc,:)=delta(nc,:)/cont(nc);
       endif
-    endfor
-    
-%    grafica
-   for i = 1:k
-       plot(c(i,1),c(i,2),'ro'); hold on;
-       axis([-1.25 1.25 -1.25 1.25]); hold on;
-       pause(1);
-   endfor
-   hold off;
-    
-    # calculamos la distancia de cada patron a los k centroides
-    for p=1:cant_patrones
-      dist = [];  
-      for nc=1:k
-        dist_patron_centroide = norm(entradas(p,:) - c(nc,:) , 2);
-        dist=[dist  dist_patron_centroide];
-      endfor
-      
-      [~,pos] = min(dist(1,:)); # dist  = [0.5 4 45 0.7 4.3] -> min = 0.5 pos=1
-      g(p) = pos; 
     endfor
     
     if g==g_aux
