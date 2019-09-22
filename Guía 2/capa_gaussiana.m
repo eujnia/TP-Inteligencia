@@ -76,12 +76,12 @@ while distintos
 endwhile
    
   yg=zeros(cant_patrones,k);
-  
+ 
   #delta es el promedio de los cambios del grupo
   for j=1:k
-    for i=1:cant_patrones
+    for i=1:tipo_patrones
      y  = exp((-0.5* mean((entradas(i,:)- c(j,:)))./ desvio).^2);
-     yg(i,j) = y;
+     yg(i,j) = y*w(j,i);
     # yg = [yg  mean( v_delta(i) - c(i,:) )];
     endfor
    endfor
