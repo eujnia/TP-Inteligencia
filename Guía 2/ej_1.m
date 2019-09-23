@@ -1,8 +1,10 @@
 #Ejercicio 1 
- file = 'XOR_trn.csv';
- part_trn_original=csvread('XOR_trn.csv');
- part_tst_original=csvread('XOR_tst.csv');
+  cant_entradas=2;
+  nro_k=8;
+  nro_epocas=1;
+  tasa_apr=0.1;
+  criterio_corte=0.8;
+ file_trn='XOR_trn.csv';
+ file_tst='XOR_tst.csv';
   
- desempenio = RBF(file, part_trn_original, part_tst_original);
- 
-  
+ desempenio = RBF(file_trn, file_tst, cant_entradas, nro_k, nro_epocas, tasa_apr, criterio_corte);

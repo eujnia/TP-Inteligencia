@@ -1,13 +1,12 @@
-function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)  
+function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=1)  
    
-  cant_patrones = size(entradas,1);
-  tipo_patrones = size(entradas,2);
+  cant_patrones = size(datos_trn,1);
+  tipo_patrones = size(datos_trn,2);
   
   g = zeros(cant_patrones,1); # cant de patrones
-  w = ones(k,cant_patrones); # cant de gausianas, cant de patrones
 
   # iniciacion de c forma 1  
-  c=entradas(1:k,:);
+  c=datos_trn(1:k,:);
   
   # iniciacion de centroides forma 2
   #  centroides a partir de prom de puntos del conj
@@ -41,7 +40,7 @@ function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)
       for p=1:cant_patrones
         dist = [];  
         for nc=1:k
-          dist_patron_centroide = norm(entradas(p,:) - c(nc,:) , 2);
+          dist_patron_centroide = norm(datos_trn(p,:) - c(nc,:) , 2);
           dist=[dist  dist_patron_centroide];
         endfor
         
@@ -54,16 +53,16 @@ function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)
       cont = zeros(k,1);
       
       for p=1:cant_patrones
-          delta(g(p),:) += entradas(p,:); 
+          delta(g(p),:) += datos_trn(p,:); 
           cont(g(p)) += 1;
       endfor 
       
       for nc=1:k
         if cont(nc) == 0 
           c(nc,:)=zeros(1,tipo_patrones);
-          c(nc,:)=ones(1,tipo_patrones)*0.5;
-          %ver acá! que hacemos cuando no hay ningún elemento más cerca que otro?
-          %para mí le ponemos un centroide cualquiera. el primer centroide.
+%          c(nc,:)=ones(1,tipo_patrones)*0.5;
+          %ver acï¿½! que hacemos cuando no hay ningï¿½n elemento mï¿½s cerca que otro?
+          %para mï¿½ le ponemos un centroide cualquiera. el primer centroide.
         else      
           c(nc,:)=delta(nc,:)/cont(nc);
         endif
@@ -77,14 +76,19 @@ function [yg] = capa_gaussiana(entradas, k, taza, desvio=1)
       
   endwhile
    
-  yg=zeros(cant_patrones,k);
+  yg_trn=zeros(cant_patrones,k);
+  yg_tst=zeros(size(datos_tst,1),k);
  
   #delta es el promedio de los cambios del grupo
   for j=1:k
-    for i=1:tipo_patrones
-     y  = exp((-0.5* mean((entradas(i,:)- c(j,:)))./ desvio).^2);
-     yg(i,j) = y*w(j,i);
-    # yg = [yg  mean( v_delta(i) - c(i,:) )];
+    for i=1:cant_patrones
+     yg_trn(i,j) = exp((-0.5* mean((datos_trn(i,:)- c(j,:)))./ desvio).^2);
+    endfor
+   endfor
+   
+   for j=1:k
+    for i=1:size(datos_tst,1)
+     yg_tst(i,j) = exp((-0.5* mean((datos_tst(i,:)- c(j,:)))./ desvio).^2);
     endfor
    endfor
    
