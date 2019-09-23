@@ -18,27 +18,26 @@ RBF tiene dos capas. Una capa gausiana con aprendizaje no supervisado y una capa
 
 
 
-1- Realización de la capa gausiana: 
-
-Objetivos:
-+ Encontrar k conjuntos  Cj de forma tal que
-	+ Cada conjunto Cj sea lo más diferente posible de los demás
-	+ Los patrones dentro de cada Cj sean lo más parecidos posible entre ellos.
-+ Encontrar el centroide de cada conjunto Cj
 
 
+Algoritmo en la capa gausiana:
 
-Método: 
+  *	Mientras no se actualice g:
+     	*	Guardamos g actual
+     	*	Graficamos los centroides
+     	*	Calculamos la distancia de todos los patrones a los k centroides con la norma 2 y guardamos el centroide mas cercano al mismo
+     	*	Entre todos los patrones pertenecientes al conjunto calculamos el promedio. Delta es una matriz que contiene en cada fila el nuevo centroide: se suman en cada uno de ellos los valores de loss puntos del conjunto y se divide por la cantidad de patrones pertenecientes al conjunto. Consideración: si la cantidad de patrones pertenecientes al cjnto es nula el patron se va a 0,0,0.
+     	*	Luego de ajustar los centroides, calculamos la gauseana usando 
 
-1. Inicialización: se forman los k conjuntos con patrones elegidos al aleatoriamente.
-
-2. Se calculan los centroides.
-
-3. Se reasignan los patrones al Cj más cercano.
-
-4. Volver a 2 hasta que no se realicen reasignaciones.
+$$
+y  = exp((-0.5* mean((entradas(i,:)- c(j,:)))./ desvio)^2
+$$
 
 
+
+Algoritmo en la etapa de salida:
+
+​	Perceptrón simple sobre las salidas de la gauseana
 
 Segun entiendo, la capa gausiana tiene que devolver las salidas estimadas para un conjunto de puntos. Así que ahora devuelve yg pero lo que importa es cg, que tiene 1 o -1 dependiendo de si fue el maximo de yg o no.
 
