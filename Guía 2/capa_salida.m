@@ -7,7 +7,7 @@
    y_tst=tst(:,cant_entradas+1:end);
    
    % entrenamiento del percceptron simple
-   [w] = train(x_trn,y_trn,nro_epocas,criterio,tasa_apr)
+   [w] = train(x_trn,y_trn,nro_epocas,criterio,tasa_apr);
    
    % prueba del perceptron
    [desempenio] = test(w,x_tst,y_tst);
