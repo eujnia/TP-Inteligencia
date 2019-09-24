@@ -19,7 +19,7 @@
  
  cant_entradas=4;
  nro_k=25;
- nro_epocas=100;
+ nro_epocas=1000;
  tasa_apr=0.1;
  criterio_corte=0.94;
  dim_red=[3,3,3,3];

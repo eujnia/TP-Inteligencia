@@ -1,37 +1,18 @@
 function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
   
   w=rand(alto, ancho, 2)-0.5;
-  
   min_dist=abs(w(1,1,1)-entradas(1,1))+abs(w(1,1,2)-entradas(1,2));
   pos_min=[1 1];
   
+  %% GRAFICA
   figure;
-  for i=1:alto
-    for j=1:ancho
-      
-      if i != alto && j!=ancho
-        plot(w(i,j,1),w(i,j,2),'or','linewidth',1.1); hold on;
-        line([w(i,j,1) w(i+1,j,1)],[w(i,j,2) w(i+1,j,2)],"linestyle","--","color","r");
-        line([w(i,j,1) w(i,j+1,1)],[w(i,j,2) w(i,j+1,2)],"linestyle","--","color","r");
-     endif
+  grafica_mapa(alto,ancho,w);
     
-      if j == ancho && j!=ancho
-        plot(w(i,j,1),w(i,j,2),'or','linewidth',1.1);
-        line([w(i,j,1) w(i+1,j,1)],[w(i,j,2) w(i+1,j,2)],"linestyle","--","color","r");
-      endif
-      
-      if i == alto 
-        plot(w(i,j,1),w(i,j,2),'or','linewidth',1.1);
-        if j != ancho
-          line([w(i,j,1) w(i,j+1,1)],[w(i,j,2) w(i,j+1,2)],"linestyle","--","color","r");  
-        endif
-      endif
-      
-    endfor
-  endfor
-    
-           
-  for epoca=1:nro_epocas
+  %% PARTE I : ORDENAMIENTO TOPOLÓGICO
+  nro_epoca=100;
+  radio=2;
+  tasa=0.7;
+  for epoca=1:nro_epoca
     for patron=1:size(entradas,1)
       
       % buscar distancia neurona de distancia minima para el patron
@@ -46,7 +27,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
           
         endfor
       endfor
-      radio=fix(0.99*radio);
+      
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
@@ -57,26 +38,91 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
         endfor
       endfor
       
+      % grafica
+      if mod(epoca,10)==0
+        grafica_mapa(alto,ancho,w);
+        pause(1);
+      endif
       
-      
-      
-      
-      hold off;
-      for i=1:alto-1
-          for j=1:ancho-1
-              plot(w(i,j,1),w(i,j,2),'or','linewidth',1.1); hold on;
-              line([w(i,j,1) w(i+1,j,1)],[w(i,j,2) w(i+1,j,2)],"linestyle","--","color","r");
-              line([w(i,j,1) w(i,j+1,1)],[w(i,j,2) w(i,j+1,2)],"linestyle","--","color","r");
-          endfor
-          plot(w(i,ancho,1),w(i,ancho,2),'or','linewidth',1.1);
-          line([w(i,ancho,1) w(i+1,ancho,1)],[w(i,ancho,2) w(i+1,ancho,2)],"linestyle","--","color","r");
+    endfor
+  endfor
+  
+  %% PARTE II : TRANSICIÓN
+  nro_epoca=300;
+  radio=5;
+  tasa=0.7;
+  for epoca=1:nro_epoca
+    if radio>1
+       radio=radio-1;
+    endif
+    tasa=tasa-0.6*epoca/nro_epoca;
+    for patron=1:size(entradas,1)
+      % buscar distancia neurona de distancia minima para el patron
+      for i=1:alto
+        for j=1:ancho
+          
+          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+          if dist<min_dist
+            min_dist=dist;
+            pos_min=[i j];
+          endif
+          
+        endfor
       endfor
-       for j=1:ancho-1
-         plot(w(alto,j,1),w(alto,j,2),'or','linewidth',1.1);
-          line([w(alto,j,1) w(alto,j+1,1)],[w(alto,j,2) w(alto,j+1,2)],"linestyle","--","color","r");
-         endfor
-         plot(w(alto,ancho,1),w(alto,ancho,2),'or','linewidth',1.1);
-      pause(1);
+      
+      % actualizar ganadora y vecinas
+      for i=1:alto
+        for j=1:ancho
+          if pos_min(1)+i<=radio && pos_min(2)+j<=radio
+            w(i,j,1)+=w(i,j,1)+tasa*(entradas(patron,1)-w(i,j,1));
+            w(i,j,2)+=w(i,j,2)+tasa*(entradas(patron,2)-w(i,j,2));
+          endif
+        endfor
+      endfor
+      
+      % grafica
+      if mod(epoca,10)==0
+        grafica_mapa(alto,ancho,w);
+        pause(1);
+      endif
+      
+    endfor
+  endfor
+  
+  %% PARTE III : CONVERGENCIA
+  nro_epoca=600;
+  radio=0;
+  tasa=0.1;
+  for epoca=1:nro_epoca
+    for patron=1:size(entradas,1)
+      % buscar distancia neurona de distancia minima para el patron
+      for i=1:alto
+        for j=1:ancho
+          
+          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+          if dist<min_dist
+            min_dist=dist;
+            pos_min=[i j];
+          endif
+          
+        endfor
+      endfor
+      
+      % actualizar ganadora y vecinas
+      for i=1:alto
+        for j=1:ancho
+          if pos_min(1)+i<=radio && pos_min(2)+j<=radio
+            w(i,j,1)+=w(i,j,1)+tasa*(entradas(patron,1)-w(i,j,1));
+            w(i,j,2)+=w(i,j,2)+tasa*(entradas(patron,2)-w(i,j,2));
+          endif
+        endfor
+      endfor
+      
+      % grafica
+      if mod(epoca,10)==0
+        grafica_mapa(alto,ancho,w);
+        pause(1);
+      endif
       
     endfor
   endfor
