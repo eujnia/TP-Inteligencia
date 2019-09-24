@@ -1,5 +1,5 @@
-alto=10;
-ancho=10;
+alto=7;
+ancho=7;
 datos=csvread('te.csv');
 nro_epocas=1000;
 radio=5;
