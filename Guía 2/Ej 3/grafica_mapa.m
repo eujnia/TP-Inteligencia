@@ -1,3 +1,7 @@
+hold off;
+plot(1000,1000,'.y');
+axis([-2 2 -2 2]);
+hold on;
   for i=1:alto
     for j=1:ancho
       if i != alto && j!=ancho
@@ -22,3 +26,4 @@
       
     endfor
   endfor
+  pause(1);
