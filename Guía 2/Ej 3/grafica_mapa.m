@@ -1,6 +1,3 @@
-  hold off;
-  plot(0,0,'.b');
-  hold on;
   for i=1:alto
     for j=1:ancho
       if i != alto && j!=ancho
