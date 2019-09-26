@@ -10,7 +10,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
   grafica_mapa;
     
   %% PARTE I : ORDENAMIENTO TOPOLÓGICO
-  nro_epoca=100;
+  nro_epoca=nro_epocas*0.1;
   radio=2;
   tasa=0.7;
   for epoca=1:nro_epoca
@@ -48,7 +48,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
   endfor
   
   %% PARTE II : TRANSICIÓN
-  nro_epoca=300;
+  nro_epoca=nro_epocas*0.3;
   radio=5;
   tasa=0.7;
   for epoca=1:nro_epoca
@@ -89,7 +89,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
   endfor
   
   %% PARTE III : CONVERGENCIA
-  nro_epoca=600;
+  nro_epoca=nro_epocas*0.6;
   radio=0;
   tasa=0.1;
   for epoca=1:nro_epoca
