@@ -1,7 +1,8 @@
-function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
+function []=SOM(alto, ancho, entradas, nro_epocas, radio)
   
   w=rand(alto, ancho, 2)-0.5;
-  min_dist=abs(w(1,1,1)-entradas(1,1))+abs(w(1,1,2)-entradas(1,2));
+  min_dist=norm((w(1,1,1)-entradas(1,1)),(w(1,1,2)-entradas(1,2)),2);
+  % abs(w(1,1,1)-entradas(1,1))+abs(w(1,1,2)-entradas(1,2));
   pos_min=[1 1];
   
   %% GRAFICA
@@ -9,32 +10,34 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
   hold on;
   grafica_mapa;
     
-  %% PARTE I : ORDENAMIENTO TOPOLÓGICO
-  nro_epoca=nro_epocas*0.1;
-  radio=2;
-  tasa=0.7;
+  %% PARTE I : ORDENAMIENTO TOPOLOGICO -----------------------------------
+  nro_epoca=nro_epocas*0.1; 
+  radio=0;
+  tasa=0.9;
   for epoca=1:nro_epoca
     for patron=1:size(entradas,1)
       
-      % buscar distancia neurona de distancia minima para el patron
+      % Buscar la neurona cuya distancia al patron sea m�nima (competencia)
+ 
       for i=1:alto
         for j=1:ancho
           
-          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
-          if dist<min_dist
+         # dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+          dist=norm((w(i,j,1)-entradas(patron,1)), (w(i,j,2)-entradas(patron,2)),2);
+          if dist<=min_dist
             min_dist=dist;
             pos_min=[i j];
           endif
           
         endfor
       endfor
-      
+       pos_min
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
           if abs(pos_min(1)-i)<=radio && abs(pos_min(2)-j)<=radio 
-            w(i,j,1)=w(i,j,1)+tasa*(entradas(patron,1)-w(i,j,1));
-            w(i,j,2)=w(i,j,2)+tasa*(entradas(patron,2)-w(i,j,2));
+            w(i,j,1)=w(i,j,1)+tasa* (entradas(patron,1)-w(i,j,1));
+            w(i,j,2)=w(i,j,2)+tasa* (entradas(patron,2)-w(i,j,2));
           endif
         endfor
       endfor
@@ -47,10 +50,11 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
     endfor
   endfor
   
-  %% PARTE II : TRANSICIÓN
+  
+  %% PARTE II : TRANSICION ---------------------------------------------
   nro_epoca=nro_epocas*0.3;
-  radio=5;
-  tasa=0.7;
+  radio=3;
+  tasa=0.2;
   for epoca=1:nro_epoca
     if radio>1
        radio=radio-1;
@@ -74,8 +78,8 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
       for i=1:alto
         for j=1:ancho
           if pos_min(1)+i<=radio && pos_min(2)+j<=radio
-            w(i,j,1)=w(i,j,1)+tasa*(entradas(patron,1)-w(i,j,1));
-            w(i,j,2)=w(i,j,2)+tasa*(entradas(patron,2)-w(i,j,2));
+            w(i,j,1)=w(i,j,1)+tasa*(w(i,j,1)-entradas(patron,1));
+            w(i,j,2)=w(i,j,2)+tasa*(w(i,j,2)-entradas(patron,2));
           endif
         endfor
       endfor
@@ -88,7 +92,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
     endfor
   endfor
   
-  %% PARTE III : CONVERGENCIA
+  %% PARTE III : CONVERGENCIA -------------------------------------------
   nro_epoca=nro_epocas*0.6;
   radio=0;
   tasa=0.1;
@@ -111,8 +115,8 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio, tasa)
       for i=1:alto
         for j=1:ancho
           if pos_min(1)+i<=radio && pos_min(2)+j<=radio
-            w(i,j,1)=w(i,j,1)+tasa*(entradas(patron,1)-w(i,j,1));
-            w(i,j,2)=w(i,j,2)+tasa*(entradas(patron,2)-w(i,j,2));
+            w(i,j,1)=w(i,j,1)+tasa*(w(i,j,1)-entradas(patron,1));
+            w(i,j,2)=w(i,j,2)+tasa*(w(i,j,2)-entradas(patron,2));
           endif
         endfor
       endfor
