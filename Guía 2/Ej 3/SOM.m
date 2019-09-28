@@ -12,8 +12,8 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
     
   %% PARTE I : ORDENAMIENTO TOPOLOGICO -----------------------------------
   nro_epoca=nro_epocas*0.1; 
-  radio=0;
-  tasa=0.9;
+  radio=2;
+  tasa=0.7;
   for epoca=1:nro_epoca
     for patron=1:size(entradas,1)
       
@@ -22,16 +22,17 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
       for i=1:alto
         for j=1:ancho
           
-         # dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
-          dist=norm((w(i,j,1)-entradas(patron,1)), (w(i,j,2)-entradas(patron,2)),2);
+          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+           
           if dist<=min_dist
             min_dist=dist;
             pos_min=[i j];
           endif
+      
           
         endfor
       endfor
-       pos_min
+         min_dist=100; 
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
@@ -53,7 +54,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
   
   %% PARTE II : TRANSICION ---------------------------------------------
   nro_epoca=nro_epocas*0.3;
-  radio=3;
+  radio=2;
   tasa=0.2;
   for epoca=1:nro_epoca
     if radio>1
@@ -73,7 +74,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
           
         endfor
       endfor
-      
+        min_dist=100;
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
@@ -110,7 +111,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
           
         endfor
       endfor
-      
+        min_dist=100;
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
