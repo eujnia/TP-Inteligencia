@@ -12,12 +12,12 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
     
   %% PARTE I : ORDENAMIENTO TOPOLOGICO -----------------------------------
   nro_epoca=nro_epocas*0.1; 
-  radio=2;
-  tasa=0.7;
+  radio=1;
+  tasa=0.5;
   for epoca=1:nro_epoca
     for patron=1:size(entradas,1)
       
-      % Buscar la neurona cuya distancia al patron sea mínima (competencia)
+      % Buscar la neurona cuya distancia al patron sea mï¿½nima (competencia)
  
       for i=1:alto
         for j=1:ancho
