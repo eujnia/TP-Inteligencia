@@ -1,27 +1,25 @@
 function [y] = defuzzificacion(conjunto_salida,tipo,a)
   
   cant_fila = size(conjunto_salida,1);
-  y_cg = zeros(cant_fila,1);
-  tipo = 0;
+  y_cg = [];
+  A = [];
   Atot = 0;
-
-  for i = 1:cant_fila
-   conjunto_actual = conjunto_salida(i,:);
-   
-   m_eval = membresia(conjunto_actual,tipo,conjunto_actual);
-   if a(i) != 0
-     m_escala = a(i)*m_eval;
+  y=0; 
+    
+  if tipo == 0 %trapezoidal
+    for i = 1:cant_fila
+      conjunto_actual = conjunto_salida(i,:);
+      y_cg(i)=sum(conjunto_actual)/4;
+      A(i)=(conjunto_actual(4)-conjunto_actual(1))*a(i); 
+      Atot += A(i);   
+    
+      y += y_cg(i)*A(i);
+    endfor 
+    y = y / Atot;
      
-     y_cg(i) = cg_aux(conjunto_actual, a(i));
-   #  A(i) = area(conjunto_actual, m_escala);
-     
-    # Atot += A(i);
-   endif
-
-   
-  endfor
-  y_cg
- #  y = y_cg.*A;
- #  y = y / A_tot;
+  endif
+  if tipo == 1 %gousian
+  endif
+  
   
 endfunction
