@@ -1,4 +1,4 @@
-function [y_cg]= cg(conjunto_x);
+function [y_cg]= cg(conjunto_x, m_escala);
   y_cg=0;
   for i = 1:4
     y_cg += conjunto_x(i);
