@@ -1,31 +1,42 @@
 function [y] = defuzzificacion_6(conjunto_salida,r,tipo,a)
   
+  % cantidad de conjuntos de salida
   cant_fila = size(conjunto_salida,1);
-  y_cg = [];
-  A = [];
+  % inicialización en cero de la suma de centroides por áreas
+  y_cg = 0;
+  % inicialización en cero del área total
   Atot = 0;
-  y=0;
+  % por las dudas
+  y = 0;
     
-  if tipo == 0 %trapezoidal
-    for i = 1:cant_fila
-      conjunto_actual = conjunto_salida(r(i),:);
-      y_cg(i)=(conjunto_actual(1) +conjunto_actual(2)*4 +conjunto_actual(4))/6;
-      A(i)=(conjunto_actual(4)-conjunto_actual(1))*a(i); 
-      Atot += A(i);   
-    
-      y += y_cg(i)*A(i);
-    endfor 
-    y = y / Atot;
-     
-  endif
-  if tipo == 1 %gousian
-    for i = 1:cant_fila
-      conjunto_actual = conjunto_salida(r(i),:);
-    %  y_cg(i)=sum(conjunto_actual)/4;
-     % A(i) = sigma*(2*pi)^0.5;
+  % condicional de acuerdo a si usamos trapecios o gaussianas
+  if tipo == 0
+    for i=1:cant_fila
+      % se usa el índice i no r(i) porque ese corresponde solo a las funciones de activación
+      conjunto_actual = conjunto_salida(i,:);
+      centro_masa_actual = centro_masa(conjunto_actual);
+      % esto es área por activación, de acuerdo al mapeo de las reglas en r
+      area_membresia = a(r(i))*area_trapecio(conjunto_actual);
+      % suma de centros por áreas
+      y_cg += centro_masa_actual*area_membresia;
+      % suma de áreas
+      Atot += area_membresia;
     endfor
+    y = y_cg/Atot;
     
-  endif
+  else
+    % same que arriba pero para gaussianas
+    for i=1:cant_fila
+      conjunto_actual = conjunto_salida(i,:);
+      % la media es el centroide que corresponde al primer elemento de los que definen el conjunto
+      centro_masa_actual = conjunto_actual(1);
+      % el área es desvio*(2pi)^(1/2), el segundo elemento que define el conjunto es el desvío
+      area_membresia = a(r(i))*conjunto_actual(2)*(2*pi)^(1/2);
+      y_cg += centro_masa_actual*area_membresia;
+      Atot += area_membresia;
+    endfor
+    y = y_cg/Atot;
   
+  endif
   
 endfunction
