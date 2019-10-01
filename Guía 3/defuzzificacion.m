@@ -4,7 +4,7 @@ function [y] = defuzzificacion(conjunto_salida,tipo,a)
   y_cg = [];
   A = [];
   Atot = 0;
-  y=0;
+  y=0;  
     
   if tipo == 0 %trapezoidal
     for i = 1:cant_fila
