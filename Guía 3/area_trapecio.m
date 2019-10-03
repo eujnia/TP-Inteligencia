@@ -1,20 +1,20 @@
-function area = area_trapecio(membresia)
+function area = area_trapecio(mem)
   
   areas=zeros(3,1);
   
-  if membresia(1) != membresia(2)
+  if mem(1) != mem(2)
       %área del triángulo base por altura sobre 2
-      areas(1)=(membresia(2)-membresia(1))/2;
+      areas(1)=(mem(2)-mem(1))/2;
   endif
   
-  if membresia(2) != membresia(3)
+  if mem(2) != mem(3)
       %área del triángulo base por altura sobre 2
-      areas(2)=membresia(3)-membresia(2);
+      areas(2)=mem(3)-mem(2);
   endif
   
-  if membresia(3) != membresia(4) 
+  if mem(3) != mem(4) 
       %área del triángulo base por altura sobre 2
-      areas(3)=(membresia(4)-membresia(3))/2;
+      areas(3)=(mem(4)-mem(3))/2;
   endif
   
   %cálculo del área total
