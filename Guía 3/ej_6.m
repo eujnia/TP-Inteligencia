@@ -15,5 +15,5 @@ S = [-7 -5 -5 -3 ; -5 -3 -3 -1;-3 -1 -1 0; -1 0 0 1;0 1 1 3; 1 3 3 5; 3 5 5 7];
 %fila = nro conjunto 
 x = [-20:0.5:20];
 r = [1; 2; 3; 4; 5; 6; 7];
-y= reglas_borrosas(x,M,S,r)
-grafica_ej_6();
+y= reglas_borrosas(x,M,S,r);
+grafica_ej_6;

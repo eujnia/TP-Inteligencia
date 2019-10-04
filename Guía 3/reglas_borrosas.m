@@ -1,6 +1,6 @@
 function [y]=reglas_borrosas(x,E,S,r)
   y = zeros(length(x),1);
-  tipo=0;
+  tipo=1;
   n = size(r,1);
   ga=zeros(size(x),size(E,1));
   #x puede ser un valor o un vector e u g e n i a 
