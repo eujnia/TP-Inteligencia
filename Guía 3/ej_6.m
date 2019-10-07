@@ -11,9 +11,9 @@
 % y analice el resultado.
 M = [-20 -20 -10 -5; -10 -5 -5 -2; -5 -2 -2 0; -2 0 0 2; 0 2 2 5; 2 5 5 10; 5 10 20 20];
 S = [-7 -5 -5 -3 ; -5 -3 -3 -1;-3 -1 -1 0; -1 0 0 1;0 1 1 3; 1 3 3 5; 3 5 5 7];
- 
+tipo = 0;
 %fila = nro conjunto 
 x = [-20:0.5:20];
 r = [1; 2; 3; 4; 5; 6; 7];
-y= reglas_borrosas(x,M,S,r);
+y= reglas_borrosas(x,M,S,tipo,r);
 grafica_ej_6;

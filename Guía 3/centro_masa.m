@@ -1,7 +1,7 @@
 function [centro_masa_figura]= centro_masa(membresia);
   % membresia son los puntos que definen a la funcion de membresia
   
-  % centroides de las tres partes (tecnicamente la coordenada en x ddel centroide)
+  % centroides de las tres partes (tecnicamente la coordenada en x del centroide)
   centroides=zeros(3,1);
   % areas de las tres partes
   areas=zeros(3,1);

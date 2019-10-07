@@ -22,7 +22,9 @@ function [y] = defuzzificacion(conjunto_salida,tipo,a)
       % suma de áreas
       Atot += area_membresia;
     endfor
-    y = y_cg/Atot;
+    if Atot != 0
+      y = y_cg/Atot;
+    endif
     
   else
     % same que arriba pero para gaussianas
@@ -35,7 +37,9 @@ function [y] = defuzzificacion(conjunto_salida,tipo,a)
       y_cg += centro_masa_actual*area_membresia;
       Atot += area_membresia;
     endfor
-    y = y_cg/Atot;
+    if Atot != 0
+      y = y_cg/Atot;
+    endif
   
   endif
   
