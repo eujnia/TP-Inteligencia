@@ -9,12 +9,13 @@ function [] = sistema_borroso(c)
  for n=1:200
     %calculamos q, la cantidad de temperatura que debería agregar 
     %el acondicionador para llegar a la tref
-     q(n) = controlador(to(n), tref(n), c);
+     q(n+1) = controlador(to(n), tref(n), c);
      %se la pasamos al acondicionador
-     to(n+1) = acondicionador(q(n), to(n));
+     to(n+1) = acondicionador(q(n+1), to(n));
      
  endfor
  err = tref-to;
+ error_final=err(length(err))
  
  % Graficas
  tiempo = [0:1:200];

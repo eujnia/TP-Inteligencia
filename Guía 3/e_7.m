@@ -20,7 +20,7 @@ endfor
 %  Esto sucede porque la función de membresía cerca de cero es pequeña y las funciones que están pegadas son mayores lo que
 %  hace que los centroides estén más cerca de esas funciones y oscilen
 %
-%  Sobreimpulso: En estos casos no se presentan sobreimpulsos.
+    %  Sobreimpulso: En estos casos no se presentan sobreimpulsos.
 %
 %  Velocidad de convergencia: La convergenca más rapida se obtiene en el caso en donde la matriz de entrada tiene solo 
 %  conjuntos triangulares y la de salida tiene conjuntos grandes cerca del cero, siendo menor en los casos de oscilaciones
