@@ -1,63 +1,82 @@
-function [mejor_pos] = swarm_opt(funcion, x_ini_fin, nro_part, c, fit, cond_fin, it_max)
-  mejor_pos = -1;
-  %Inicializamos las partÃ­culas
-  aux = x_ini_fin(2) - x_ini_fin(1);
+function [mejor_pos, t] = swarm_opt(funcion, ini_fin, nro_particulas, c, fit, cond_fin, t_max)
+
+  # inicializamos las parti­culas
+  dimensiones = size(ini_fin,1);
+  x = zeros(nro_particulas, dimensiones);
+  aux = ini_fin(:,2) - ini_fin(:,1);
   
-  x = zeros(nro_part,1);
-  for i=1:nro_part
-    x(i) = rand(1);
-    x(i) = aux*x(i) + x_ini_fin(1);
+  for i=1:nro_particulas
+    for j = dimensiones
+      x(i,j) = rand(1);
+      x(i,j) = aux * x(i,j) + ini_fin(1,j);
+    endfor
   endfor
-  %mejores locales
+
+  # iniciamos mejores locales
   y = x;
-  %mejores globales /vector que contiene el mejor en cada iteracion
-  y_sombrero = zeros(it_max,1);
-  y_sombrero(1) = x(1);
-  %velocidad inicial
-  v=zeros(size(x),1);
+  
+  # mejor global (vector que contiene el mejor en cada t)
+  y_glob = zeros(t_max, dimensiones);
+  y_glob(1,:) = x(1,:);
+  mejor_pos = x(1,:);
+  
+  # v0
+  v = zeros(nro_particulas, dimensiones);
   
   figure;
   for i=1:size(x,1)
-    scatter(x(i),0,'b','linewidth',1.2); hold on;
+     for j=1:size(x,2)
+      scatter(x(i,j),0,'b','linewidth',1.2); hold on;
+     endfor
   endfor 
   
-  it=1;
-  %enjambre
-  while (it != it_max)
-    %evaluamos si el fitness actual es mayor que el mejor
-    if it > 1
-     y_sombrero(it,1) = y_sombrero(it-1,1);
-    endif
-   
-    for i=1:nro_part
-     if fit(x(i)) > fit(y(i))
-       y(i) = x(i);
-     endif
-     if fit(x(i)) > fit(y_sombrero(it))
-       y_sombrero(it,1) = x(i);
-     endif
+  t=2;
+  # enjambre
+  while (t != t_max)
+    y_glob(t,dimensiones) = y_glob(t-1, dimensiones);
+    
+    for i=1:nro_particulas
+      for j=1:dimensiones
+       # evaluamos si el fitness actual es menor que el mejor local
+
+       if abs(fit(x(i,:))) < abs(fit(y(i,:)))
+         y(i,j) = x(i,j);
+       endif
+       # evaluamos si el fitness actual es menor que el mejor global
+       if abs(fit(x(i,j))) <  abs(fit(y_glob(t,j)))
+         y_glob(t,j) = x(i,j);
+       endif
+     endfor
     endfor
+    
     r = rand(1);  
-    for i=1:nro_part
-      v(i) = v(i) + c(1)*r*(y(i)-x(i)) + c(2)*(1-r)*(y_sombrero(it,1)-x(i));
-      r = rand(1);
-      x(i) = x(i) + v(i);
-    endfor
-    it= it+1;
+
+    v = v + c(1)*r*(y - x) + c(2)*(1-r)*(y_glob(t,:) - x);
+    x = x + v;
+
+    t = t + 1;
     
     hold off; scatter(x(1),0,'b','linewidth',1.2); hold on; 
     for i=1:size(x,1)
       scatter(x(i),0,'b','linewidth',1.2); hold on;
     endfor
-    if it >= 11
-      if abs(median(y_sombrero(it-10:1:it,1)) - y_sombrero(it,1)) <= cond_fin
-        mejor_pos = y_sombrero(it,1);  
-        break;
-      endif
+    
+    # criterio de corte
+    if t >= 11
+      
+      for j = 1:dimensiones  
+        if abs(median(y_glob(t-10:1:t,j)) - y_glob(t,j)) <= cond_fin
+          mejor_pos = y_glob(t,:);  
+          break;
+        endif  
+      endfor
+      
     endif
   
   endwhile
-  if mejor_pos == -1
-    mejor_pos = y_sombrero(it_max-1,1);
+
+  if t == t_max
+    mejor_pos = y_glob(t_max-1,:);
   endif  
+  
 endfunction
