@@ -23,7 +23,7 @@ function [mejores_resultados] = ag_minimo(caso, x_ini_fin, y_ini_fin, nro_poblac
     x = linspace( x_ini_fin(1), x_ini_fin(2), 2^nro_bits_individuo );
     indiv = [1:2^nro_bits_individuo];
   endif 
-  
+   
   % 2. Asignar poblacion inicial
   if caso == 3
     % COMPLETAR
@@ -31,7 +31,8 @@ function [mejores_resultados] = ag_minimo(caso, x_ini_fin, y_ini_fin, nro_poblac
     poblacion = [];
     fitness_mejor = 0;
     for i=1:nro_poblacion
-      idx = randperm(size(indiv));
+      idx = randperm( 2^nro_bits_individuo,1);
+      idx
       poblacion = [poblacion; indiv(idx)];
       if fitness(x(idx)) > fitness_mejor
         idx_mejor = idx;
@@ -63,7 +64,9 @@ function [mejores_resultados] = ag_minimo(caso, x_ini_fin, y_ini_fin, nro_poblac
     for i=1:nro_seleccion
       fitness_competencia = 0;
       for j=1:nro_competencia
-        idx = find(poblacion(randperm(length(poblacion))), indiv);
+        poblacion 
+        idx = find(poblacion(randperm(length(poblacion),1)), indiv);
+         
         fitness_indiv = fitness(x(idx));
         if fitness_indiv > fitness_competencia
           fitness_competencia = fitness_indiv;
@@ -73,21 +76,29 @@ function [mejores_resultados] = ag_minimo(caso, x_ini_fin, y_ini_fin, nro_poblac
       endfor
       seleccion = [seleccion; indiv(idx)];
       
-    endfor
-    
+    endfor 
+    seleccion
     % 4.2 Cruzar y mutar
     nuevos_indiv = [];
     while length(nuevos_indiv) < nro_hijos
       prob = rand();
       if prob < prob_cruza
-        prog1 = seleccion(randperm(length(seleccion)));
-        prog2 = seleccion(randperm(length(seleccion)));
+         
+        prog1 = seleccion(randperm(length(seleccion),1));
+        prog2 = seleccion(randperm(length(seleccion),1));
+         
+        prog1
         bin_prog1 = dec2bin(prog1)';
+        dec2bin(prog1)
         bin_prog2 = dec2bin(prog2)';
         punto_cruza = randperm(nro_bits_individuo);
-        bin_hijo1 = [bin_prog1(1:punto_cruza) bin_prog2(punto_cruza+1:end)];
-        bin_hijo2 = [bin_prog2(1:punto_cruza) bin_prog1(punto_cruza+1:end)];
-        prob = rand();
+        
+        bin_hijo1 = [bin_prog1(1:punto_cruza-1) bin_prog2(punto_cruza+1:nro_bits_individuo-1)];
+        bin_hijo2 = [bin_prog2(1:punto_cruza-1) bin_prog1(punto_cruza+1:nro_bits_individuo-1)];
+      
+        
+        
+         prob = rand();
         if prob < prob_muta_indiv
           punto_muta = randperm(nro_bits_individuo);
           if bin_hijo1(punto_muta)=='0'

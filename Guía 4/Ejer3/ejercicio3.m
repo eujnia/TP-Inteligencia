@@ -7,6 +7,7 @@ ro = 0.99999;
 n= 8; # cantidad de ciudades a visitar
 
 [menor_d,sum,t] = alg_hormigas(n_ciudades, distancia, n_hormigas, t_max,ro,n);
+
 menor_d
 sum
 t
