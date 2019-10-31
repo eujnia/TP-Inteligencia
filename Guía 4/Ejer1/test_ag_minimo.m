@@ -25,9 +25,14 @@ criterio_corte = 0.3;
 ventana = 10;
 it_max = 100;
 
-[x_min,~,mejores_resultados]=ag_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
-                                        nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
-                                        ventana, it_max);
+%[x_min,~,mejores_resultados]=ag_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
+%                                        nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
+%                                        ventana, it_max);
                
+               
+ 
+[x_min,~,mejores_resultados]=alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
+                                        nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
+                                        ventana, it_max);              
 figure;               
 plot(mejores_resultados);                                        
