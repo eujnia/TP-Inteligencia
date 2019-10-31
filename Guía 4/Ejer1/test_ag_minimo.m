@@ -31,8 +31,15 @@ it_max = 100;
                
                
  
-[x_min,~,mejores_resultados]=alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
+[ mejores_resultados]=alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
                                         nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
                                         ventana, it_max);              
 figure;               
-plot(mejores_resultados);                                        
+
+if caso == 1
+   func = @(x) -x .* sin(sqrt(abs(x)));
+   fitness = @(x) 450./((-x .* sin(sqrt(abs(x)))) + 450);
+   nro_individuos = 2^nro_bits_individuo;   
+   x = linspace( -512, 512 , nro_individuos )
+   stem(mejores_resultados,func(mejores_resultados));
+endif

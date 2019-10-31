@@ -84,30 +84,20 @@ function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_p
         
         bin_hijo1 = [bin_prog1(1:punto_cruza) bin_prog2(punto_cruza+1:nro_bits_individuo)];
         bin_hijo2 = [bin_prog2(1:punto_cruza) bin_prog1(punto_cruza+1:nro_bits_individuo)];
-      %%%%
-         prob = rand();
-        if prob < prob_muta_indiv
-          punto_muta = randperm(nro_bits_individuo);
-          if bin_hijo1(punto_muta)=='0'
-            bin_hijo1(punto_muta)='1';
-          else
-            bin_hijo1(punto_muta)='0';
-          endif
-        endif
-        if prob < prob_muta_indiv
-          punto_muta = randperm(nro_bits_individuo);
-          if bin_hijo2(punto_muta)=='0'
-            bin_hijo2(punto_muta)='1';
-          else
-            bin_hijo2(punto_muta)='0';
-          endif
-        endif
+      
+        % mutamos
+        
+        prob1 = rand();
+        prob2 = rand();
+        punto_muta = randperm(nro_bits_individuo,1);
+        [bin_hijo1, bin_hijo2] = mutador(prob1,prob2,punto_muta,prob_muta_indiv, bin_hijo1, bin_hijo2);
+
         hijo1 = bin2dec(bin_hijo1);
         hijo2 = bin2dec(bin_hijo2);
-        
+          
         nuevos_indiv = [nuevos_indiv; hijo1; hijo2];
-        
-      endif
+          
+     endif
       
     endwhile
     nuevos_indiv
@@ -150,7 +140,7 @@ function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_p
         [tf, pos] = ismember(n,indiv);
         idx = pos;
         if idx != 0
-        scatter(x(idx), func(x(idx)), 'k','linewidth',1.1); hold on;
+          scatter(x(idx), func(x(idx)), 'k','linewidth',1.1); hold on;
         endif
       endfor
       scatter(x(idx_mejor), func(x(idx_mejor)), 'r','linewidth',1.2); hold on;
@@ -163,6 +153,6 @@ function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_p
     poblacion = nueva_generacion; 
   
   endfor
-  mejores_resultados = poblacion;
+  mejores_resultados = x(poblacion);
   
 endfunction
