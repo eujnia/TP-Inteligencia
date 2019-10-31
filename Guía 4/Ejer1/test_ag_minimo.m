@@ -14,9 +14,9 @@ switch caso
 endswitch
     
 
-nro_poblacion = 10;
-nro_bits_individuo = 6;
-nro_seleccion = 5;
+nro_poblacion = 100;
+nro_bits_individuo = 7;
+nro_seleccion = 10;
 nro_competencia = 2;
 prob_cruza = 0.9;
 prob_muta_indiv = 0.01;
@@ -31,7 +31,7 @@ it_max = 100;
                
                
  
-[ mejores_resultados]=alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
+[ mejor,mejores_resultados,it ]=alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
                                         nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
                                         ventana, it_max);              
 figure;               

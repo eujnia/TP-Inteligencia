@@ -1,4 +1,4 @@
-function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_hormigas, t_max, ro,  n_m)
+function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_hormigas, t_min_max, ro,  n_m)
 
   feromona = (rand(n_ciudades,n_ciudades) + 0.1);
   min_sum = 10000.1;
@@ -9,8 +9,8 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
   
   prob = nodo * feromona;
 
-  for t = 1:t_max
-    ini = mod(t,n_ciudades)+1;
+  for t = 1:t_min_max(2)
+    ini = 5;#7;%mod(t,n_ciudades)+1;
     
     # para cada hormiga
     for k = 1:n_hormigas
@@ -75,9 +75,22 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
       endfor
       
      endfor 
+    
      
-
-  endfor
+  # corte 
+     s = 0;
+     for i = 1:size(p,1)-1 # si los caminos para todas las 
+                         # hormigas son iguales, cortamos.
+      if t > t_min_max(1) && p(i,:) == p(i+1,:) 
+        t_menor = t;
+        s = 1;
+      endif
+     endfor
+     
+     if s == 1
+       break
+     endif
+ endfor
    
    
   

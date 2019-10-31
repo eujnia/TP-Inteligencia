@@ -24,6 +24,7 @@ function [mejor_pos, t] = swarm_opt(funcion, ini_fin, nro_particulas, c, fit, co
   v = zeros(nro_particulas, dimensiones);
   
   figure;
+  axis([-512 512 -1 1]);
   for i=1:size(x,1)
      for j=1:size(x,2)
       scatter(x(i,j),0,'b','linewidth',1.2); hold on;
@@ -52,27 +53,56 @@ function [mejor_pos, t] = swarm_opt(funcion, ini_fin, nro_particulas, c, fit, co
     r = rand(1);  
 
     v = v + c(1)*r*(y - x) + c(2)*(1-r)*(y_glob(t,:) - x);
-    x = x + v;
-
+    
+    for j = 1:size(x,1)
+      for i = 1:size(x,2)
+       aux_x = x(j,i) + v(j,i);
+       if aux_x <= ini_fin(1,2) && aux_x >= ini_fin(1,1) 
+          x(j,i) = aux_x;
+        else
+           if aux_x < ini_fin(1,2)
+           x(j,i) = ini_fin(1,1);
+           else
+            x(j,i) = ini_fin(1,2);
+           endif
+        endif 
+     endfor
+      
+    endfor
+    
+##    if t>4 && abs(y_glob(t,:) - x) <= 1
+##      x = x + v*0.1;
+##    else
+##      x = x + v;
+##    endif
+     
     t = t + 1;
     
     hold off; scatter(x(1),0,'b','linewidth',1.2); hold on; 
+    
+  axis([-512 512 -1 1]);
+
     for i=1:size(x,1)
       scatter(x(i),0,'b','linewidth',1.2); hold on;
-    endfor
-    
-    # criterio de corte
-    if t >= 11
       
+    endfor
+    pause(.5);
+    # criterio de corte
+     s= 0;
+    if t >= 11
+     
       for j = 1:dimensiones  
         if abs(median(y_glob(t-10:1:t,j)) - y_glob(t,j)) <= cond_fin
           mejor_pos = y_glob(t,:);  
+          s= 1;
           break;
         endif  
       endfor
-      
+     
     endif
-  
+   if s==1
+        break
+      endif
   endwhile
 
   if t == t_max

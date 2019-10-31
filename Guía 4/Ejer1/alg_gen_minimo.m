@@ -1,4 +1,4 @@
-function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
+function [mejor, lista_mejores, it] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
                                           nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
                                           ventana, it_max)
   
@@ -11,7 +11,7 @@ function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_p
     % 1. Generar individuos
   
     x = linspace( x_ini_fin(1), x_ini_fin(2), nro_individuos );
-    
+    lista_mejores = [];
     indiv = [1:nro_individuos];
    
    
@@ -51,10 +51,14 @@ function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_p
     for i=1:nro_seleccion
       fitness_competencia = 0;
       for j=1:nro_competencia 
-         n = randperm(size(poblacion,1),1);
-        [tf, pos] = ismember(n,indiv);
-            
+        pos = 0;
+        while pos == 0
+           n = randperm(size(poblacion,1),1);
+          [tf, pos] = ismember(n,indiv);
+        endwhile
+        
         idx = pos;
+        
         fitness_indiv = fitness(x(idx));
         if abs(fitness_indiv) > abs(fitness_competencia)
           fitness_competencia = fitness_indiv;
@@ -146,13 +150,25 @@ function [mejores_resultados] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin, nro_p
       scatter(x(idx_mejor), func(x(idx_mejor)), 'r','linewidth',1.2); hold on;
       
     endif
+    pause(0.5); 
     
     % 4.6 Cortar si se cumple el criterio 
     
    
     poblacion = nueva_generacion; 
+    [mejor, pos] = max(fitness(x(poblacion)));
+    mejor = x(pos);
+    
+    lista_mejores = [lista_mejores;  x(pos)];
+    if it >= 50 && median(lista_mejores(it-9:end)) == mejor
+      it_final = it;
+      break
+    endif
   
   endfor
-  mejores_resultados = x(poblacion);
+
+  [mejor, pos] = max(fitness(x(poblacion)));
+  mejor = x(pos);
+  
   
 endfunction
