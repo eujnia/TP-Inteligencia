@@ -1,6 +1,6 @@
 function [mejor_pos, t] = swarm_opt(funcion, ini_fin, nro_particulas, c, fit, cond_fin, t_max)
 
-  # inicializamos las parti­culas
+  # inicializamos las partiï¿½culas
   dimensiones = size(ini_fin,1);
   x = zeros(nro_particulas, dimensiones);
   aux = ini_fin(:,2) - ini_fin(:,1);
@@ -24,10 +24,11 @@ function [mejor_pos, t] = swarm_opt(funcion, ini_fin, nro_particulas, c, fit, co
   v = zeros(nro_particulas, dimensiones);
   
   figure;
-  axis([-512 512 -1 1]);
+  x_plot=linspace( ini_fin(1,1), ini_fin(1,2), 1000 );
+  plot(x_plot, funcion(x_plot), 'k', 'linewidth', 1.1); hold on;
   for i=1:size(x,1)
      for j=1:size(x,2)
-      scatter(x(i,j),0,'b','linewidth',1.2); hold on;
+      scatter(x(i,j),funcion(x(i,j)),'b','linewidth',1.2); hold on;
      endfor
   endfor 
   
@@ -78,15 +79,13 @@ function [mejor_pos, t] = swarm_opt(funcion, ini_fin, nro_particulas, c, fit, co
      
     t = t + 1;
     
-    hold off; scatter(x(1),0,'b','linewidth',1.2); hold on; 
-    
-  axis([-512 512 -1 1]);
-
+    hold off; 
+    plot(x_plot, funcion(x_plot), 'k', 'linewidth', 1.1); hold on;
     for i=1:size(x,1)
-      scatter(x(i),0,'b','linewidth',1.2); hold on;
-      
+      scatter(x(i),funcion(x(i)),'b','linewidth',1.2); hold on;
     endfor
     pause(.5);
+    
     # criterio de corte
      s= 0;
     if t >= 11
