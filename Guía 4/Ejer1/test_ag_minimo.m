@@ -1,5 +1,4 @@
 warning off
-pkg load symbolic
 
     nro_poblacion = 10;
     nro_bits_individuo = 10;
