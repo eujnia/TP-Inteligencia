@@ -13,7 +13,7 @@ function [mejor, lista_mejores, it] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin,
 %      fitness = @(x) 10./((x + 5*sin(3*x) + 8*cos(5*x)) + 10); 
       fitness = @(x) exp(-(((x-1.8)/1.8).^2)); % gaussiana -> mejor convergencia
     case 3
-      func = @(x,y) (x.^2 + y.^2).^(0.25) .* ((sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1);
+      func = @(x,y) (x.^2 + y.^2).^(0.25) .* [(sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1];
 %      fitness = @(x,y) 1./(((x.^2 + y.^2).^(0.25) .* ((sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1)) + 1); 
       fitness = @(x,y) exp(-(((x/50).^2)+((y/50).^2))); % gaussiana -> mejor convergencia
     endswitch
@@ -72,8 +72,8 @@ function [mejor, lista_mejores, it] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin,
       scatter(x(poblacion+1), func(x(poblacion+1)), 'k','linewidth',1.1); hold on;
       scatter(x(idx_mejor), func(x(idx_mejor)), 'r','linewidth',1.2); hold on;
     else
-      x_plot = linspace(x_ini_fin(1), x_ini_fin(2), 100);
-      y_plot = linspace(y_ini_fin(1), y_ini_fin(2), 100);
+      x_plot = linspace(x_ini_fin(1), x_ini_fin(2), 1000);
+      y_plot = linspace(y_ini_fin(1), y_ini_fin(2), 1000);
       [coord_x, coord_y] = meshgrid(x_plot, y_plot);
       contour(coord_x, coord_y, func(coord_x, coord_y), 5); hold on;
       scatter(x(poblacion(:,1)+1), y(poblacion(:,2)+1), func(x(poblacion(:,1)+1), y(poblacion(:,2)+1)), 'k','linewidth',1.1); hold on;

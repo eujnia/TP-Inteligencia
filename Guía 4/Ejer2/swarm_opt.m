@@ -4,24 +4,28 @@ function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, f
   dimensiones = size(ini_fin,1);
   x = zeros(nro_particulas, dimensiones);
   aux = ini_fin(:,2) - ini_fin(:,1);
-  
+
   for i=1:nro_particulas
     for j = 1:dimensiones
-       x(i,j) = aux * rand() + ini_fin(1,j);
+       x(i,j) = aux(j) * rand() + ini_fin(1,j);
     endfor
   endfor
-
+  
+  if caso == 3
+    x = 200*rand(nro_particulas, dimensiones) - 100;
+  endif
+    
   # iniciamos mejores locales
   y = x;
   
   # mejor global (vector que contiene el mejor en cada t)
-  y_glob = zeros(t_max, dimensiones);
+  y_glob = rand(t_max, dimensiones);
   mejor_pos = x(1,:);
   
   # v0
   v = zeros(nro_particulas, dimensiones);
   
-  figure;
+%  figure;
   if caso != 3
     x_plot=linspace( ini_fin(1,1), ini_fin(1,2), 1000 );
     plot(x_plot, funcion(x_plot), 'k', 'linewidth', 1.1); hold on;
@@ -37,7 +41,7 @@ function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, f
      contour(coordx, coordy, funcion(coordx, coordy), 5); hold on;
      for i=1:size(x,1)
        for j=1:size(x,2)
-         scatter(x(i,j),funcion(x(i,j)),'b','linewidth',1.2); hold on;
+         scatter(x(i,1),x(i,2),funcion(x(i,1),x(i,2)),'b','linewidth',1.2); hold on;
        endfor
      endfor
   endif
@@ -50,17 +54,29 @@ function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, f
     endif
     
     for i=1:nro_particulas
-      for j=1:dimensiones
-       # evaluamos si el fitness actual es menor que el mejor local
-
-       if abs(fit(x(i,:))) < abs(fit(y(i,:)))
-         y(i,j) = x(i,j);
-       endif
-       # evaluamos si el fitness actual es menor que el mejor global
-       if abs(fit(x(i,j))) <  abs(fit(y_glob(t,j)))
-         y_glob(t,j) = x(i,j);
-       endif
-     endfor
+       if caso != 3
+          # evaluamos si el fitness actual es menor que el mejor local
+          if fit(x(i,1)) < fit(y(i,1))
+            y(i,1) = x(i,1);
+          endif
+       
+          # evaluamos si el fitness actual es menor que el mejor global
+          if fit(x(i,1)) <  fit(y_glob(t,1))
+            y_glob(t,1) = x(i,1);
+          endif
+     
+        else
+       
+          if fit(x(i,1),x(i,2)) < fit(y(i,1),y(i,2))
+            y(i,:) = x(i,:);
+          endif
+        
+          if fit(x(i,1),x(i,2)) <  fit(y_glob(t,1),y_glob(t,2))
+            y_glob(t,:) = x(i,:);
+          endif
+          
+        endif
+       
     endfor
     
     r = rand(1);  
@@ -83,11 +99,21 @@ function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, f
       
     endfor
     
-    hold off; 
-    plot(x_plot, funcion(x_plot), 'k', 'linewidth', 1.1); hold on;
-    for i=1:size(x,1)
-      scatter(x(i),funcion(x(i)),'b','linewidth',1.2); hold on;
-    endfor
+    if caso != 3
+      hold off; 
+      plot(x_plot, funcion(x_plot), 'k', 'linewidth', 1.1); hold on;
+      for i=1:size(x,1)
+        scatter(x(i),funcion(x(i)),'b','linewidth',1.2); hold on;
+      endfor
+    else
+      hold off;
+      contour(coordx, coordy, funcion(coordx, coordy), 5); hold on;
+      for i=1:size(x,1)
+        for j=1:size(x,2)
+          scatter(x(i,1),x(i,2),funcion(x(i,1),x(i,2)),'b','linewidth',1.2); hold on;
+        endfor
+      endfor
+    endif
     title(strcat("Iteración: ",num2str(t))); hold on;
     pause(.5);
     
@@ -97,7 +123,7 @@ function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, f
     
     # criterio de corte
     if t > 11
-      if abs(mean(y_glob(t-11:1:t-1,:)) - y_glob(t-1,:)) < cond_fin
+      if abs(mean(y_glob(t-11:1:t-1,:)) - y_glob(t,:)) < cond_fin
         mejor_pos = y_glob(t,:);  
         break;
       endif       
