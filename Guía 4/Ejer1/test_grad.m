@@ -1,0 +1,1 @@
+[mejor, lista_mejores, it] = gradiente(1, [-512 512], [], 0.1, 10, 100)

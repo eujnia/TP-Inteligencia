@@ -1,4 +1,5 @@
 warning off
+pkg load symbolic
 
     nro_poblacion = 10;
     nro_bits_individuo = 10;
@@ -11,7 +12,8 @@ warning off
     ventana = 20;
     it_max =100;
 
-for i=1:3
+figure;
+for i=1:1
 
   switch i
   case 1
@@ -28,13 +30,22 @@ for i=1:3
 
   endswitch
   
+  tic();
+  subplot(2,3,i);
   [ mejor,mejores_resultados,it ]=alg_gen_minimo(i, x_ini_fin, y_ini_fin, nro_poblacion, nro_bits_individuo, nro_seleccion, 
                                         nro_competencia, prob_cruza, prob_muta_indiv, porcentaje_brecha, criterio_corte, 
                                         ventana, it_max);              
-                                        
-  figure;               
+  t_ag = toc();
+  
+  [ mejor_g,mejores_resultados,it ]= gradiente(i,)
+  
+  subplot(2,3,i+3);              
   title('Fitness mejores individuos'); hold on;
   plot(mejores_resultados,'linewidth',1.1);
-  disp(strcat("Minimo encontrado: ", num2str(mejor)));
+  disp(strcar("Caso ",num2str(i),": ");
+  disp(strcat("   Minimo encontrado: ", num2str(mejor)));
+  disp(strcat("   Tiempo: ", num2str(t_ag)));
+  disp(strcat("   Minimo encontrado: ", num2str(mejor_g)));
+  disp(strcat("   Tiempo: ", num2str(tiempo)));  
   
 endfor

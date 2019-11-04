@@ -65,7 +65,7 @@ function [mejor, lista_mejores, it] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin,
   
   
   % 3. Graficar poblacion
-    figure;
+%    figure;
     if caso != 3
       x_plot = linspace(x_ini_fin(1), x_ini_fin(2), 1000);
       plot(x_plot, func(x_plot), 'b', 'linewidth',1.1); hold on;
