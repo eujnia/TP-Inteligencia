@@ -1,21 +1,28 @@
-
-x1 = [-512 512];
-f1 = @(x) -x .* sin(sqrt(abs(x)))+450;
-
-
-x2 = [0 20];
-f2 = @(x) x + 5*sin(3*x) + 8*cos(5*x);
-
-
-xy3 = [-100 100];
-[xcoord, ycoord] = meshgrid(xy3, xy3);
-f3 = @(x,y) (x.^2 + y.^2).^(0.25) .* [(sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1];
-
-
 nro_part = 10;
 c = [.05 .05];
-condicion_de_finalizacion = 0.1;
-t_max = 1000;
+condicion_de_finalizacion = .1;
+t_max = 20;
 
-[mejor_pos, t] = swarm_opt(f1, x1, nro_part, c, f1, condicion_de_finalizacion, t_max)
-f1(mejor_pos)
+for i=1:3
+  switch i
+    case 1
+      x = [-512 512];
+      f = @(x) -x .* sin(sqrt(abs(x)))+450;
+      fit = @(x) 1 - exp(-(((x-420)/420).^2));
+    case 2
+      x = [0 20];
+      f = @(x) x + 5*sin(3*x) + 8*cos(5*x);
+      fit = @(x) 1 - exp(-(((x-1.8)/1.8).^2));
+    case 3
+      x = [-100 100;-100 100];
+      f = @(x,y) (x.^2 + y.^2).^(0.25) .* [(sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1];
+      fit = @(x,y) 1 - exp(-(((x/50).^2)+((y/50).^2)));
+  endswitch
+  
+  disp(strcat("Caso: ",num2str(i)));
+  [mejor_pos, t] = swarm_opt(i, f, x, nro_part, c, fit, condicion_de_finalizacion, t_max)
+  
+endfor
+
+
+
