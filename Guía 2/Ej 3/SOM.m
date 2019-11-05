@@ -4,6 +4,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
   min_dist=norm((w(1,1,1)-entradas(1,1)),(w(1,1,2)-entradas(1,2)),2);
   % abs(w(1,1,1)-entradas(1,1))+abs(w(1,1,2)-entradas(1,2));
   pos_min=[1 1];
+  epoca_salto = 2; % numero de epocas que se saltean al graficar
   
   %% GRAFICA
   figure;
@@ -12,7 +13,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
     
   %% PARTE I : ORDENAMIENTO TOPOLOGICO -----------------------------------
   nro_epoca=nro_epocas*0.1; 
-  radio=1;
+  radio=2;
   tasa=0.5;
   for epoca=1:nro_epoca
     for patron=1:size(entradas,1)
@@ -22,7 +23,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
       for i=1:alto
         for j=1:ancho
           
-          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+          dist=norm((w(i,j,1)-entradas(patron,1)),(w(i,j,2)-entradas(patron,2)));
            
           if dist<=min_dist
             min_dist=dist;
@@ -32,7 +33,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
           
         endfor
       endfor
-         min_dist=100; 
+         
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
@@ -44,8 +45,10 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
       endfor
       
       % grafica
-      if mod(epoca,10)==0
+      if mod(epoca,epoca_salto)==0
           grafica_mapa;
+          title("Ordenamiento topológico");  hold on;
+          pause(.5);
       endif
       
     endfor
@@ -54,19 +57,19 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
   
   %% PARTE II : TRANSICION ---------------------------------------------
   nro_epoca=nro_epocas*0.3;
-  radio=2;
-  tasa=0.2;
+  radio=1;
+  tasa=linspace(0.2,0.1,nro_epoca);
   for epoca=1:nro_epoca
     if radio>1
        radio=radio-1;
     endif
-    tasa=tasa-0.6*epoca/nro_epoca;
     for patron=1:size(entradas,1)
+      min_dist=norm((w(1,1,1)-entradas(1,1)),(w(1,1,2)-entradas(1,2)),2);
       % buscar distancia neurona de distancia minima para el patron
       for i=1:alto
         for j=1:ancho
           
-          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+          dist=norm((w(i,j,1)-entradas(patron,1)),(w(i,j,2)-entradas(patron,2)));
           if dist<min_dist
             min_dist=dist;
             pos_min=[i j];
@@ -74,20 +77,22 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
           
         endfor
       endfor
-        min_dist=100;
+      
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
-          if pos_min(1)+i<=radio && pos_min(2)+j<=radio
-            w(i,j,1)=w(i,j,1)+tasa*(w(i,j,1)-entradas(patron,1));
-            w(i,j,2)=w(i,j,2)+tasa*(w(i,j,2)-entradas(patron,2));
+          if abs(pos_min(1)-i)<=radio && abs(pos_min(2)-j)<=radio
+            w(i,j,1)=w(i,j,1)+tasa(epoca)*(w(i,j,1)-entradas(patron,1));
+            w(i,j,2)=w(i,j,2)+tasa(epoca)*(w(i,j,2)-entradas(patron,2));
           endif
         endfor
       endfor
       
       % grafica
-      if mod(epoca,10)==0
+      if mod(epoca,epoca_salto)==0
         grafica_mapa;
+        title("Transición");  hold on;
+        pause(.5);
       endif
       
     endfor
@@ -99,11 +104,12 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
   tasa=0.1;
   for epoca=1:nro_epoca
     for patron=1:size(entradas,1)
+      min_dist=norm((w(1,1,1)-entradas(1,1)),(w(1,1,2)-entradas(1,2)),2);
       % buscar distancia neurona de distancia minima para el patron
       for i=1:alto
         for j=1:ancho
           
-          dist=abs(w(i,j,1)-entradas(patron,1))+abs(w(i,j,2)-entradas(patron,2));
+          dist=norm((w(i,j,1)-entradas(patron,1)),(w(i,j,2)-entradas(patron,2)));
           if dist<min_dist
             min_dist=dist;
             pos_min=[i j];
@@ -115,7 +121,7 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
-          if pos_min(1)+i<=radio && pos_min(2)+j<=radio
+          if abs(pos_min(1)-i)<=radio && abs(pos_min(2)-j)<=radio
             w(i,j,1)=w(i,j,1)+tasa*(w(i,j,1)-entradas(patron,1));
             w(i,j,2)=w(i,j,2)+tasa*(w(i,j,2)-entradas(patron,2));
           endif
@@ -123,9 +129,10 @@ function []=SOM(alto, ancho, entradas, nro_epocas, radio)
       endfor
       
       % grafica
-      if mod(epoca,10)==0
-        grafica_mapa(alto,ancho,w);
-        pause(1);
+      if mod(epoca,epoca_salto)==0
+        grafica_mapa;
+        title("Convergencia"); hold on;
+        pause(.5);
       endif
       
     endfor

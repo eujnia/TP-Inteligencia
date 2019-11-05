@@ -1,5 +1,7 @@
 hold off;
-plot(1000,1000,'.y');
+for i=1:2:size(entradas,1) % graficar algunos de los datos, si se grafican todos va muy lento
+  scatter(entradas(i,1), entradas(i,2), 'c'); hold on;
+endfor
 axis([-2 2 -2 2]);
 hold on;
   for i=1:alto
@@ -26,4 +28,4 @@ hold on;
       
     endfor
   endfor
-  pause(1);
+  
