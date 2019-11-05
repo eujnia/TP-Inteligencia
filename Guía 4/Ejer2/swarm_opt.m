@@ -1,4 +1,4 @@
-function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, fit, cond_fin, t_max)
+function [mejor_pos, mejores, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, fit, cond_fin, t_max)
 
   # inicializamos las parti�culas
   dimensiones = size(ini_fin,1);
@@ -119,12 +119,22 @@ function [mejor_pos, t] = swarm_opt(caso, funcion, ini_fin, nro_particulas, c, f
     
     if t == t_max
       mejor_pos = y_glob(t,:);
+      if caso != 3
+          mejores = fit(y_glob);
+        else
+          mejores = fit(y_glob(:,1),y_glob(:,2));
+        endif
     endif 
     
     # criterio de corte
     if t > 11
       if abs(mean(y_glob(t-11:1:t-1,:)) - y_glob(t,:)) < cond_fin
-        mejor_pos = y_glob(t,:);  
+        mejor_pos = y_glob(t,:);
+        if caso != 3
+          mejores = fit(y_glob(1:t,:));
+        else
+          mejores = fit(y_glob(1:t,1),y_glob(1:t,2));
+        endif
         break;
       endif       
      

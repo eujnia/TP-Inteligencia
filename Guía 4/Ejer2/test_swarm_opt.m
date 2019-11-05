@@ -23,9 +23,14 @@ for i=1:3
 %      fit = @(x,y) 1 - exp(-(((x/50).^2)+((y/50).^2)));
   endswitch
   
-  subplot(1,3,i);
-  disp(strcat("Caso: ",num2str(i)));
-  [mejor_pos, t] = swarm_opt(i, f, x, nro_part, c, fit, condicion_de_finalizacion, t_max)
+  subplot(2,3,i);
+  [mejor_pos, mejores, t] = swarm_opt(i, f, x, nro_part, c, fit, condicion_de_finalizacion, t_max);
+  
+  subplot(2,3,i+3);
+  title('Mejores globales'); hold on;
+  plot(mejores,'linewidth',1.1);
+  disp(strcat("Caso ",num2str(i),": "));
+  disp(strcat("   Minimo encontrado: ", num2str(mejor_pos)));
   
 endfor
 
