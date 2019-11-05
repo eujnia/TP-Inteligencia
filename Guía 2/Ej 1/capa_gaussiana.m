@@ -41,7 +41,7 @@ function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=
         dist = [];  
         for nc=1:k
           dist_patron_centroide = norm(datos_trn(p,:) - c(nc,:) , 2);
-          dist=[dist  dist_patron_centroide];
+          dist=[dist,  dist_patron_centroide];
         endfor
         
         [~,pos] = min(dist(1,:)); # dist  = [0.5 4 45 0.7 4.3] -> min = 0.5 pos=1
