@@ -1,34 +1,45 @@
-function [t] = selec_nodo(v)
-  c = a = [];
-    for i = 1:size(v,2)
-      if v(i) != 0
-        c = [c ; i];
-      endif
-    endfor
+function [t] = selec_nodo(prob_ciudades)
+
+  suma = 0;
+  n_ciudades = size(prob_ciudades,2);
+  
+  for i = 1:n_ciudades
+   suma = suma + prob_ciudades(i);
+  endfor
     
-    if size(c) != size(a)
-      suma = 0;
-      for i = 1:size(c)
-        v(c(i)) = 1/v(c(i));
-        suma = suma + v(c(i));
-      endfor
-      
-      v = v./suma;
-      
-      r = rand(1);
-      j=t = 0;
-      su = 0;
-      while (r > su) # for j = 1:size(v)
-        j = j + 1;
-        if v(j) != 0
-          t = j;
-        endif
-        su = su + v(j); # c(round(rand(1)*(size(c,2)-1)) + 1 ,1);
-        if j == size(v)
-          break
-        endif
-      endwhile
-       
+  # promediamos el vectro de probabilidades
+  
+  if suma != 0
+    prob_ciudades = prob_ciudades./suma;
+  endif   
+  
+  # ordenamos el vector de probabilidades
+  sort_prob = [];
+  prob_ciudades_a = prob_ciudades;
+  for i = 1:n_ciudades
+    [elem, p] = max(prob_ciudades_a);
+    sort_prob(i,1) = elem;
+    sort_prob(i,2) = p;
+    prob_ciudades_a(p) = -1;
+  endfor
+  
+  # elegimos un elemento al azar considerando las probabilidades de cada uno 
+  r = rand();
+  t = t_aux = 0;
+  suma_aux = 0;
+  
+  while (r > suma_aux) 
+    t_aux = t_aux + 1;
+    
+    if sort_prob(t_aux,1) != 0
+      t = sort_prob(t_aux,2);
     endif
-    
+    # mientras la suma aux no alcance el valor r, se suma la prob siguiente
+    suma_aux = suma_aux + sort_prob(t_aux,1);  
+    if t_aux == n_ciudades
+      break
+    endif
+  endwhile
+
+   
 endfunction

@@ -27,6 +27,8 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
       for paso = 1:n_m-2  
         
         ciudad_actual = p(k,paso);
+        feromona_total = 0;
+        
         for ciudad_x = 1:n_ciudades
           prob(ciudad_actual, ciudad_x) = nodo(ciudad_actual,ciudad_x) * feromona(ciudad_actual, ciudad_x); # distancia(p(k,paso-1),n) 
         endfor 
@@ -82,12 +84,12 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
      for i = 1:size(p,1)-1 # si los caminos para todas las 
                          # hormigas son iguales, cortamos.
       if t > t_min_max(1) && p(i,:) == p(i+1,:) 
-        t_menor = t;
         s = 1;
       endif
      endfor
      
      if s == 1
+       t_menor = t;
        break
      endif
  endfor
