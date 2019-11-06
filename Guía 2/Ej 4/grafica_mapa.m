@@ -1,8 +1,6 @@
 hold off;
-for i=1:2:size(entradas,1) % graficar algunos de los datos, si se grafican todos va muy lento
-  scatter(entradas(i,1), entradas(i,2), 'c'); hold on;
-endfor
-axis([-2 2 -2 2]);
+plot_clouds
+axis([-3 4 -4 6]);
 hold on;
   for i=1:alto
     for j=1:ancho

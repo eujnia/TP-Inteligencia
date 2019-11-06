@@ -1,5 +1,4 @@
 data=csvread("clouds.csv");
-figure;
 for i=1:300 %size(data,1)
   if data(i,3) == 1
   plot(data(i,1),data(i,2),'or'); hold on;
