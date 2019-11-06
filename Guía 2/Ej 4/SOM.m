@@ -10,9 +10,16 @@ function [w] = SOM(alto, ancho, entradas, nro_epocas)
   nro_epocas_etapa_1 = nro_epocas * 0.1;
   nro_epocas_etapa_2 = nro_epocas * 0.3;
   nro_epocas_etapa_3 = nro_epocas * 0.6;
-  radio_etapa_1 = 5;
-  radio_etapa_2 = 3;
+  radio_etapa_1 = 15;
   radio_etapa_3 = 0;
+  
+  radio_etapa_2 = ones(nro_epocas_etapa_2,1);
+  cant_iteraciones_radio=int64(nro_epocas_etapa_2/radio_etapa_1);
+  radio_etapa_2(1:cant_iteraciones_radio) = radio_etapa_1*ones(cant_iteraciones_radio,1);
+  for i=1:radio_etapa_1-1
+    radio_etapa_2(i*cant_iteraciones_radio+1:i*cant_iteraciones_radio+cant_iteraciones_radio+1,1) = radio_etapa_1-i;
+  endfor
+  
   tasa_etapa_1 = 0.5;
   tasa_etapa_3 = 0.1;
   tasa_etapa_2 = linspace( tasa_etapa_1, tasa_etapa_3, nro_epocas_etapa_2 );
@@ -74,9 +81,6 @@ function [w] = SOM(alto, ancho, entradas, nro_epocas)
   radio=radio_etapa_2;
   tasa=tasa_etapa_2;
   for epoca=1:nro_epoca
-    if radio>1
-       radio=radio-1;
-    endif
     for patron=1:size(entradas,1)
       min_dist=distancia( w(1,1,:), entradas(1,:), tipo_distancia );
       pos_min=[1 1];
@@ -96,7 +100,7 @@ function [w] = SOM(alto, ancho, entradas, nro_epocas)
       % actualizar ganadora y vecinas
       for i=1:alto
         for j=1:ancho
-          if abs(pos_min(1)-i)<=radio && abs(pos_min(2)-j)<=radio
+          if abs(pos_min(1)-i)<=radio(epoca) && abs(pos_min(2)-j)<=radio(epoca)
             w(i,j,1)=w(i,j,1)+tasa(epoca)*(entradas(patron,1)-w(i,j,1));
             w(i,j,2)=w(i,j,2)+tasa(epoca)*(entradas(patron,2)-w(i,j,2));
           endif

@@ -1,4 +1,4 @@
- function [error_prom]=capa_salida(trn,tst,cant_entradas,nro_epocas,criterio,tasa_apr)
+ function [error_prom,w]=capa_salida(trn,tst,cant_entradas,nro_epocas,criterio,tasa_apr)
    
    x_trn=trn(:,1:cant_entradas);
    y_trn=trn(:,cant_entradas+1:end);
