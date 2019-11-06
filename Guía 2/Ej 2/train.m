@@ -10,41 +10,23 @@ function [w] = train(x,yd,nro_epocas,criterio,tasa_ap)
     for patron=1:size(x,1)
     
       #funcion de transferencia   
-      z=x(patron,:)*w;
-      
-      if (z>=0)
-        y=1;
-      else
-        y=-1;
-      endif
+      y=x(patron,:)*w;
       
       # ajustar pesos
       w = w + 0.5*tasa_ap*(yd(patron)-y)*x(patron,:)';
       
     endfor
     
-    # desempeño de epoca ( validacion si contamos con otro conjunto de datos )
-    desempenio=0;
-    
     for patron=1:size(x,1)
       
-      z=x(patron,:)*w;
+      y_val=x(patron,:)*w;
       
-      if (z>=0)
-        y_val=1;
-      else
-        y_val=-1;
-      endif
-      
-      if y_val == yd(patron) 
-        desempenio += 1;
-      endif
+      error= yd(patron)-y_val/yd(patron);  
       
     endfor
-    # nro de aciertos / nro total de casos
-    desempenio_prom = desempenio / size(x,1);
+    error_prom = error / size(x,1);
     
-    if desempenio_prom >= criterio
+    if error_prom <= 1-criterio
        break
     endif
     
