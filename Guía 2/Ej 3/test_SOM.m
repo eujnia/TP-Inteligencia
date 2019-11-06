@@ -1,7 +1,17 @@
-alto=5;
-ancho=5;
+alto=10;
+ancho=10;
 datos=csvread('te.csv');
 nro_epocas=10;
-radio=2;
+SOM(alto, ancho, datos, nro_epocas);
 
-SOM(alto, ancho, datos, nro_epocas, radio);
+alto=10;
+ancho=10;
+datos=csvread('circulo.csv');
+nro_epocas=10;
+SOM(alto, ancho, datos, nro_epocas);
+
+alto=100;
+ancho=1;
+datos=csvread('te.csv');
+nro_epocas=10;
+SOM(alto, ancho, datos, nro_epocas);
