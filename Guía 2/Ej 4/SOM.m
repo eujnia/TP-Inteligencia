@@ -1,6 +1,6 @@
 function [w] = SOM(alto, ancho, entradas, nro_epocas)
   
-  w=rand(alto, ancho, 2)*10 -4;
+  w=rand(alto, ancho, 2)-.5;%*10 -4;
   tipo_distancia = 3;
   min_dist=distancia( w(1,1,:), entradas(1,:), tipo_distancia );
   % abs(w(1,1,1)-entradas(1,1))+abs(w(1,1,2)-entradas(1,2));
@@ -10,7 +10,7 @@ function [w] = SOM(alto, ancho, entradas, nro_epocas)
   nro_epocas_etapa_1 = nro_epocas * 0.1;
   nro_epocas_etapa_2 = nro_epocas * 0.3;
   nro_epocas_etapa_3 = nro_epocas * 0.6;
-  radio_etapa_1 = 15;
+  radio_etapa_1 = 4;
   radio_etapa_3 = 0;
   
   radio_etapa_2 = ones(nro_epocas_etapa_2,1);

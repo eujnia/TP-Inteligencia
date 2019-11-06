@@ -5,4 +5,4 @@ alto=10;
 ancho=10;
 nro_epocas=100;
 
-SOM(alto, ancho, datos(3001,1:3), nro_epocas)
+SOM(alto, ancho, datos(1:3001,1:2), nro_epocas)
