@@ -3,16 +3,12 @@ function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=
   cant_patrones = size(datos_trn,1);
   tipo_patrones = size(datos_trn,2);
   
-  g = zeros(cant_patrones,1); # cant de patrones
+  g = zeros(cant_patrones,1);  
 
   # iniciacion de c forma 1  
   c=datos_trn(1:k,:);
   
-  # iniciacion de centroides forma 2
-  #  centroides a partir de prom de puntos del conj
-   %  c(g(:),:) += entradas(:,:); 
-   %  c /= cant_patrones;
-  
+ 
   g_aux = zeros(cant_patrones,1);
   v_delta = []; 
 
@@ -26,7 +22,7 @@ function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=
  #hold off;
  # comparar que el grupo haya sido modificado
   while distintos
-     g_aux=g;
+     g_aux = g;
       
   %    grafica
      for i = 1:k
@@ -56,18 +52,15 @@ function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=
           delta(g(p),:) += datos_trn(p,:); 
           cont(g(p)) += 1;
       endfor 
-      
+%%%
       for nc=1:k
         if cont(nc) == 0 
           c(nc,:)=zeros(1,tipo_patrones);
-%          c(nc,:)=ones(1,tipo_patrones)*0.5;
-          %ver ac�! que hacemos cuando no hay ning�n elemento m�s cerca que otro?
-          %para m� le ponemos un centroide cualquiera. el primer centroide.
-        else      
+         else      
           c(nc,:)=delta(nc,:)/cont(nc);
         endif
       endfor
-      
+%%%     
       if g==g_aux
         distintos=0;
       else
