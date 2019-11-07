@@ -1,8 +1,11 @@
 hold off;
+entradas=datos(:,1:2);
+alto=20;
+ancho=20;
 for i=1:size(entradas,1) % graficar algunos de los datos, si se grafican todos va muy lento
   scatter(entradas(i,1), entradas(i,2), 'c'); hold on;
 endfor
-axis([-2 2 -2 2]);
+%axis([-2 2 -2 2]);
 hold on;
   for i=1:alto
     for j=1:ancho

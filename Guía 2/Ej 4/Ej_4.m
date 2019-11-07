@@ -1,14 +1,15 @@
-%Ejercicio 4
-
+%%Ejercicio 4
+%
 datos=csvread('clouds.csv');
-alto=20;
-ancho=20;
-nro_epocas=10;
-
-w=SOM(alto, ancho, datos(1:3000,1:2), nro_epocas);
-ww=[w(:,:,1); w(:,:,2)];
-csvwrite("pesos.csv",ww);
-w=csvread("pesos.csv");
+%alto=20;
+%ancho=20;
+%nro_epocas=10;
+%
+%w=SOM(alto, ancho, datos(1:3000,1:2), nro_epocas);
+%ww=[w(:,:,1); w(:,:,2)];
+%csvwrite("pesos.csv",ww);
+%w=csvread("pesos.csv");
+w=csvread("pesos2.csv");
 w_aux=w;
 w=zeros(size(w,2),size(w,2),2);
 w(:,:,1)=w_aux(1:size(w,1),:);
@@ -31,6 +32,8 @@ endfor
 desempenio=desemp/length(y);
 
 disp(strcat("Desempeño clasificador: ",num2str(desempenio)));
+
+grafica_mapa
 
 %figure;
 %title("Resultado clasificador"); hold on;
