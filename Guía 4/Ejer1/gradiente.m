@@ -45,9 +45,15 @@ function [mejor, lista_mejores, it] = gradiente(caso, x_ini_fin, y_ini_fin, crit
       contour(coordx, coordy, func(coordx, coordy), 5); hold on;
       pause(.5);
     endif
+    #gradiente v0
+    if caso != 3 
+        grad_x = dfunc(x);
+     else
+        grad_x = [dx(x(1),x(2)), dy(x(1),x(2))];
+     endif
     
     for i=1:it_max
-      
+      gradiente_anterior = grad_x;
       # gradiente 
       if caso != 3 
         grad_x = dfunc(x);
@@ -56,7 +62,7 @@ function [mejor, lista_mejores, it] = gradiente(caso, x_ini_fin, y_ini_fin, crit
       endif
       
       alpha = actualizar_alpha(x,grad_x,caso);
-      x_aux = x - grad_x.*alpha;
+      x_aux = x - (gradiente_anterior*3 + .7*grad_x).*alpha;
       
       if caso != 3
         if x_aux >= x_ini_fin(1) && x_aux <= x_ini_fin(2) 
