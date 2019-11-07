@@ -5,7 +5,7 @@ function [clases_w] = clasificar_SOM(w, datos)
   % gana más veces cada neurona
   
   clases_w = zeros(size(w(:,:,1)));
-  caso = 1;
+  caso = 2;
   tipo_distancia = 3;
   
   switch caso
@@ -15,7 +15,7 @@ function [clases_w] = clasificar_SOM(w, datos)
       for i=1:size(w,1)
         for j=1:size(w,2)
           
-          min_dist=distancia( w(1,1,:), datos(1,:), tipo_distancia );
+          min_dist=distancia( w(i,j,:), datos(1,:), tipo_distancia );
           for k=1:size(datos,1)
             
             dist=distancia( w(i,j,:), datos(k,:), tipo_distancia );
@@ -38,7 +38,7 @@ function [clases_w] = clasificar_SOM(w, datos)
       victorias=zeros(size(w,1),size(w,2),2);
       
       for k=1:size(datos,1)
-        min_dist=distancia( w(1,1,:), datos(1,:), tipo_distancia );
+        min_dist=distancia( w(1,1,:), datos(k,:), tipo_distancia );
         
         for i=1:size(w,1)
           for j=1:size(w,2)

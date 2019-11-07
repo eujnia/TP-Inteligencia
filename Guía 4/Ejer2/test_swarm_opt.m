@@ -1,7 +1,7 @@
 nro_part = 10;
 c = [.1 .2];
 condicion_de_finalizacion = .1;
-t_max = 50;
+t_max = 100;
 figure;
 
 for i=1:3

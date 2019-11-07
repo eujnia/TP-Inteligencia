@@ -1,6 +1,6 @@
 warning off
 
-    nro_poblacion = 10;
+    nro_poblacion = 20;
     nro_bits_individuo = 10;
     nro_seleccion = 10;
     nro_competencia = 5;
@@ -8,8 +8,8 @@ warning off
     prob_muta_indiv = 0.1;
     porcentaje_brecha = 0.3;
     criterio_corte = 0.3;
-    ventana = 20;
-    it_max =100;
+    ventana = 100;
+    it_max =1000;
 
 figure;
 for i=1:3

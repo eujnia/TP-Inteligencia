@@ -1,19 +1,19 @@
 function [w] = SOM(alto, ancho, entradas, nro_epocas)
   
-  w=rand(alto, ancho, 2)*10 -4;
+  w=rand(alto, ancho, 2)-0.5;
   tipo_distancia = 3;
   min_dist=distancia( w(1,1,:), entradas(1,:), tipo_distancia );
-  % abs(w(1,1,1)-entradas(1,1))+abs(w(1,1,2)-entradas(1,2));
   pos_min=[1 1];
   epoca_salto = 1; % numero de epocas que se saltean al graficar
   
   nro_epocas_etapa_1 = nro_epocas * 0.1;
   nro_epocas_etapa_2 = nro_epocas * 0.3;
   nro_epocas_etapa_3 = nro_epocas * 0.6;
-  radio_etapa_1 = 15;
-  radio_etapa_3 = 0;
   
+  radio_etapa_1 = 5;
+  radio_etapa_3 = 0;
   radio_etapa_2 = ones(nro_epocas_etapa_2,1);
+  
   cant_iteraciones_radio=int64(nro_epocas_etapa_2/radio_etapa_1);
   radio_etapa_2(1:cant_iteraciones_radio) = radio_etapa_1*ones(cant_iteraciones_radio,1);
   for i=1:radio_etapa_1-1
@@ -138,16 +138,16 @@ function [w] = SOM(alto, ancho, entradas, nro_epocas)
           
         endfor
       endfor
-        min_dist=100;
+      
       % actualizar ganadora y vecinas
-      for i=1:alto
-        for j=1:ancho
-          if abs(pos_min(1)-i)<=radio && abs(pos_min(2)-j)<=radio
+%      for i=1:alto
+%        for j=1:ancho
+%          if abs(pos_min(1)-i)<=radio && abs(pos_min(2)-j)<=radio
             w(i,j,1)=w(i,j,1)+tasa*(entradas(patron,1)-w(i,j,1));
             w(i,j,2)=w(i,j,2)+tasa*(entradas(patron,2)-w(i,j,2));
-          endif
-        endfor
-      endfor
+%          endif
+%        endfor
+%      endfor
       
     endfor
     

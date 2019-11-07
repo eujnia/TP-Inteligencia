@@ -11,6 +11,7 @@ function [error_prom] = test(w,x,yd)
     error= yd(patron)-y(patron)/yd(patron);  
     
   endfor
+  
   figure;
   plot(y);
   hold on;
