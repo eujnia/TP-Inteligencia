@@ -10,7 +10,11 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
   prob = nodo * feromona;
 
   for t = 1:t_min_max(2)
-    ini = 5;#7;%mod(t,n_ciudades)+1;
+    if n_ciudades=7
+      ini = 7;
+    else
+      ini = 5;
+    endif
     
     # para cada hormiga
     for k = 1:n_hormigas
@@ -33,7 +37,7 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
           prob(ciudad_actual, ciudad_x) = nodo(ciudad_actual,ciudad_x) * feromona(ciudad_actual, ciudad_x); # distancia(p(k,paso-1),n) 
         endfor 
         
-        # seleccionamos el próximo nodo según la probabilidad 
+        # seleccionamos el prï¿½ximo nodo segï¿½n la probabilidad 
         i = selec_nodo(prob(ciudad_actual,:)); 
         
         if i != 0 

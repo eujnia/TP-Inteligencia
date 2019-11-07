@@ -6,16 +6,16 @@ function [mejor, lista_mejores, it] = alg_gen_minimo(caso, x_ini_fin, y_ini_fin,
     switch caso
     case 1
       func = @(x) -x .* sin(sqrt(abs(x)));
-%      fitness = @(x) 450./((-x .* sin(sqrt(abs(x)))) + 450); 
-      fitness = @(x) exp(-(((x-424)/212).^2)); % gaussiana -> mejor convergencia
+      fitness = @(x) 450./((-x .* sin(sqrt(abs(x)))) + 450); 
+%      fitness = @(x) exp(-(((x-424)/212).^2)); % gaussiana -> mejor convergencia
     case 2
       func = @(x) x + 5*sin(3*x) + 8*cos(5*x);
-%      fitness = @(x) 10./((x + 5*sin(3*x) + 8*cos(5*x)) + 10); 
-      fitness = @(x) exp(-(((x-1.8)/1.8).^2)); % gaussiana -> mejor convergencia
+      fitness = @(x) 10./((x + 5*sin(3*x) + 8*cos(5*x)) + 10); 
+%      fitness = @(x) exp(-(((x-1.8)/1.8).^2)); % gaussiana -> mejor convergencia
     case 3
       func = @(x,y) (x.^2 + y.^2).^(0.25) .* [(sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1];
-%      fitness = @(x,y) 1./(((x.^2 + y.^2).^(0.25) .* ((sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1)) + 1); 
-      fitness = @(x,y) exp(-(((x/50).^2)+((y/50).^2))); % gaussiana -> mejor convergencia
+      fitness = @(x,y) 1./(((x.^2 + y.^2).^(0.25) .* ((sin(50 .* (x.^2 + y.^2).^(0.1) )).^2 + 1)) + 1); 
+%      fitness = @(x,y) exp(-(((x/50).^2)+((y/50).^2))); % gaussiana -> mejor convergencia
     endswitch
   
     nro_hijos = round((1-porcentaje_brecha) * nro_poblacion) - 1;

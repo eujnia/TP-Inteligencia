@@ -7,10 +7,10 @@ csvwrite('irisbin_trn.csv',datos_trn);
 csvwrite('irisbin_tst.csv',datos_tst);
 
 cant_entradas=4;
-nro_k=14;
-nro_epocas=1000;
+nro_k=10;
+nro_epocas=200;
 tasa_apr=0.1;
-criterio_corte=0.94;
+criterio_corte=0.95;
 dim_red=[3,3,3,3];
 
 #desempe�o con RBF

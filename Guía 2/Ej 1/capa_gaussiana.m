@@ -45,7 +45,7 @@ function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=
         endfor
         
         [~,pos] = min(dist(1,:)); # dist  = [0.5 4 45 0.7 4.3] -> min = 0.5 pos=1
-        g(p) = pos; 
+        g(p) = pos; % indica el centroide más cercano a el patron p
       endfor
       
       # promedio cada componente del punto del conj 
