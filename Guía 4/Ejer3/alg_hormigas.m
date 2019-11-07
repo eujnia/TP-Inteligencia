@@ -24,7 +24,6 @@ function [menor_d, min_sum,t_menor] = alg_hormigas(n_ciudades, distancia, n_horm
       for nod = 1:n_ciudades
          nodo(nod,nod) = 0;
       endfor
-      nodo
       
       p(k,1) = ini; 
       

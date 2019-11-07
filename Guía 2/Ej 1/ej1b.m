@@ -8,8 +8,8 @@ csvwrite('irisbin_tst.csv',datos_tst);
 
 cant_entradas=4;
 nro_k=10;
-nro_epocas=200;
-tasa_apr=0.1;
+nro_epocas=1000;
+tasa_apr=0.01;
 criterio_corte=0.95;
 dim_red=[3,3,3,3];
 

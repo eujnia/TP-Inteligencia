@@ -1,5 +1,6 @@
 %Ejercicio 4 - dados los pesos, solamente clasificar
- 
+
+datos=csvread('clouds.csv');
 wx=csvread("pesos_1x.csv");
 wy=csvread("pesos_1y.csv");
 

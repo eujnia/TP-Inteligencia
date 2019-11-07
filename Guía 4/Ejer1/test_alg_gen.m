@@ -1,7 +1,7 @@
 warning off
 
     nro_poblacion = 20;
-    nro_bits_individuo = 10;
+    nro_bits_individuo = 20;
     nro_seleccion = 10;
     nro_competencia = 5;
     prob_cruza = 0.9;
@@ -12,7 +12,7 @@ warning off
     it_max =1000;
 
 figure;
-for i=1:3
+for i=3:3
 
   switch i
   case 1

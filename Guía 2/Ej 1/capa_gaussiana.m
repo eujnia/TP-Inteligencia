@@ -75,13 +75,13 @@ function [yg_trn,yg_tst] = capa_gaussiana(datos_trn, datos_tst, k, taza, desvio=
   #delta es el promedio de los cambios del grupo
   for j=1:k
     for i=1:cant_patrones
-     yg_trn(i,j) = exp((-0.5* mean((datos_trn(i,:)- c(j,:)))./ desvio).^2);
+     yg_trn(i,j) = exp(-0.5*( sum((datos_trn(i,:)- c(j,:)))./ desvio).^2);
     endfor
    endfor
    
    for j=1:k
     for i=1:size(datos_tst,1)
-     yg_tst(i,j) = exp((-0.5* mean((datos_tst(i,:)- c(j,:)))./ desvio).^2);
+     yg_tst(i,j) = exp(-0.5*( sum((datos_tst(i,:)- c(j,:)))./ desvio).^2);
     endfor
    endfor
    

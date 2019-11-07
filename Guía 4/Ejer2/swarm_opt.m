@@ -127,8 +127,8 @@ function [mejor_pos, mejores, t] = swarm_opt(caso, funcion, ini_fin, nro_particu
     endif 
     
     # criterio de corte
-    if t > 11
-      if abs(mean(y_glob(t-11:1:t-1,:)) - y_glob(t,:)) < cond_fin
+    if t > 51
+      if abs(mean(y_glob(t-51:1:t-1,:)) - y_glob(t,:)) < cond_fin
         mejor_pos = y_glob(t,:);
         if caso != 3
           mejores = fit(y_glob(1:t,:));

@@ -1,5 +1,5 @@
-nro_part = 10;
-c = [.1 .2];
+nro_part = 20;
+c = [1 1];
 condicion_de_finalizacion = .1;
 t_max = 100;
 figure;

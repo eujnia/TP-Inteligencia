@@ -33,7 +33,7 @@ desempenio=desemp/length(y);
 
 disp(strcat("Desempeño clasificador: ",num2str(desempenio)));
 
-grafica_mapa
+%grafica_mapa
 
 %figure;
 %title("Resultado clasificador"); hold on;
