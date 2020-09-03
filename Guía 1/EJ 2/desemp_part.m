@@ -1,10 +1,18 @@
-function [data_trn,data_tst] = m_part(file_trn, file_tst, cant_entrada, cant_part)
+function [v_desemp] = desemp_part(file, cant_part, p_trn,nro_epocas,criterio,tasa_ap)
+  
+  v_desemp = [];
+  
+  [file_trn, file_tst] = particionar(file, cant_part, p_trn);
 
   datos_trn=csvread(file_trn);
   datos_tst=csvread(file_tst);
+
+  %para c particion
+  %size(datos_trn) da 800 x 20
+  %como tiene los datos consecutivos, tengo que barrer as? 
   
   %para generalizar los datos
-  d = size(datos_trn,2)/cant_part;
+  d = size(datos_trn,2)/cant_part; %da 4
   ini=1;
   fin=d;
    
@@ -12,8 +20,8 @@ function [data_trn,data_tst] = m_part(file_trn, file_tst, cant_entrada, cant_par
    
     elem_trn = datos_trn(:,ini:fin);
  
-    x_trn= elem_trn(:,1:cent_entrada);
-    y_trn= elem_trn(:,cant_entrada:size(elem_trn,2));
+    x_trn= elem_trn(:,1:3);
+    y_trn= elem_trn(:,4);
     
     w=train(x_trn,y_trn,nro_epocas,criterio,tasa_ap);
   
@@ -27,13 +35,13 @@ function [data_trn,data_tst] = m_part(file_trn, file_tst, cant_entrada, cant_par
     ini=ini+d;
     fin=fin+d;
     
-    figure;
-    grafica_datos([elem_trn(:,1:3) elem_trn(:,4)]);
-    x1=x2=linspace(-1.5,1.5,10);
-    [xx1,xx2]=meshgrid(x1,x2);
-    x3=(1/w(4))*(w(1)-xx1*w(2)-xx2*w(3));
-    mesh(x1,x2,x3);
-    axis([-1.5 1.5 -1.5 1.5 -1.5 1.5]); 
+    #figure;
+    #grafica_datos([elem_trn(:,1:3) elem_trn(:,4)]);
+    #x1=x2=linspace(-1.5,1.5,10);
+    #[xx1,xx2]=meshgrid(x1,x2);
+    #x3=(1/w(4))*(w(1)-xx1*w(2)-xx2*w(3));
+    #mesh(x1,x2,x3);
+    #axis([-1.5 1.5 -1.5 1.5 -1.5 1.5]); 
   endfor
   
   v_desemp = v_desemp';

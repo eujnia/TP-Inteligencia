@@ -6,7 +6,7 @@ function [file_trn,file_tst] = particionar(file, cant_part, p_trn)
   
   cant_dat_trn = n_pat * p_trn;
   
-  %matrices de tranning y test por partici�n  
+  %matrices de tranning y test por partici?n  
   m_part_trn=[];
   m_part_tst=[];
   
@@ -26,7 +26,7 @@ function [file_trn,file_tst] = particionar(file, cant_part, p_trn)
     
     for i=1:1:n_trn
       
-      elem = datos(idx_trn(i,1), :)'; %[elem ser� columna un ratito]
+      elem = datos(idx_trn(i,1), :)'; %[elem ser? columna un ratito]
      
       v_elem_trn = [v_elem_trn elem]; %vector de los elem  matriz de (4,800)
       

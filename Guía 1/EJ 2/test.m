@@ -6,7 +6,7 @@ function [desempenio_prom] = test(w,x,yd)
   # recorrer por patron
   for patron=1:size(x,1)
     
-    z=x(patron,:)*w;
+    z=dot(w,x(patron,:));
     
     # funcion de activacion
     if (z>=0)
@@ -22,6 +22,6 @@ function [desempenio_prom] = test(w,x,yd)
   
   endfor
 
-  desempenio_prom = desempenio / size(x,1); % es da un float  100% confirmado
+  desempenio_prom = desempenio / size(x,1) % es da un float  100% confirmado
   
 endfunction
